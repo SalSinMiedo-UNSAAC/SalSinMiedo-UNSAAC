@@ -8,3 +8,18 @@ services:
     volumes:
       - .:/usr/share/nginx/html
     restart: always
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: salsinmiedo_user
+      POSTGRES_PASSWORD: salsinmiedo_password
+      POSTGRES_DB: salsinmiedo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  role      Role     @default(TRAVELER)
+  avatar    String?
+  routes    UserRoute[]
+  documents Document[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  TRAVELER
+  ADMIN
+}
+
+model UserRoute {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  origin      String   // e.g., "Perú"
+  destination String   // e.g., "España"
+  reason      String   // e.g., "Estudios"
+  progress    Int      @default(0) // 0-100%
+  requirements Requirement[]
+  createdAt   DateTime @default(now())
+}
+
+model Requirement {
+  id          String         @id @default(cuid())
+  routeId     String
+  route       UserRoute      @relation(fields: [routeId], references: [id])
+  title       String         // "Pasaporte vigente"
+  source      String         // "RENIEC / Migraciones Perú"
+  status      RequirementStatus @default(PENDING)
+  isCritical  Boolean        @default(false)
+  documents   Document[]
+}
+
+enum RequirementStatus {
+  PENDING
+  IN_REVIEW
+  VALIDATED
+  REJECTED
+}
+
+model Document {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  requirementId String
+  requirement   Requirement @relation(fields: [requirementId], references: [id])
+  fileUrl       String
+  uploadedAt    DateTime    @default(now())
+}
