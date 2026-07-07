@@ -3,799 +3,335 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SalSinMiedo - Hipótesis y Mockup</title>
-  <style>
-    :root {
-      --bg: #f5f7ff;
-      --navy: #071334;
-      --navy-2: #0b1d4d;
-      --primary: #5b3df5;
-      --primary-soft: #ece8ff;
-      --green: #16b978;
-      --green-soft: #e7f8f0;
-      --orange: #f59e0b;
-      --orange-soft: #fff4df;
-      --red: #ef4444;
-      --red-soft: #ffecec;
-      --text: #101936;
-      --muted: #65708a;
-      --card: #ffffff;
-      --border: #e5e9f5;
-      --shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
-      --radius: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(91, 61, 245, 0.16), transparent 34%),
-        radial-gradient(circle at top right, rgba(22, 185, 120, 0.12), transparent 30%),
-        var(--bg);
-      color: var(--text);
-    }
-
-    .app {
-      display: grid;
-      grid-template-columns: 270px 1fr;
-      min-height: 100vh;
-    }
-
-    aside {
-      background: linear-gradient(180deg, var(--navy), var(--navy-2));
-      color: white;
-      padding: 32px 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    aside::after {
-      content: "";
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      border-radius: 999px;
-      background: rgba(91, 61, 245, 0.35);
-      bottom: -100px;
-      left: -80px;
-      filter: blur(18px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      margin-bottom: 46px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 15px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #7457ff, #1ec98d);
-      font-weight: 900;
-      box-shadow: 0 12px 30px rgba(91, 61, 245, .35);
-    }
-
-    .brand h1 {
-      font-size: 24px;
-      line-height: 1;
-      letter-spacing: -0.6px;
-    }
-
-    .brand p {
-      color: #b7c0df;
-      font-size: 13px;
-      margin-top: 5px;
-    }
-
-    nav {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      gap: 12px;
-    }
-
-    nav a {
-      color: #dfe6ff;
-      text-decoration: none;
-      padding: 13px 15px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      font-weight: 650;
-      font-size: 15px;
-    }
-
-    nav a.active,
-    nav a:hover {
-      background: rgba(91, 61, 245, 0.95);
-      color: white;
-    }
-
-    .help-card {
-      position: absolute;
-      z-index: 2;
-      bottom: 28px;
-      left: 24px;
-      right: 24px;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .help-card strong {
-      display: block;
-      margin-bottom: 7px;
-    }
-
-    .help-card span {
-      color: #c6cef0;
-      font-size: 13px;
-      line-height: 1.4;
-    }
-
-    main {
-      padding: 28px 38px 42px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .search {
-      width: min(640px, 100%);
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 15px 18px;
-      color: var(--muted);
-      box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #1d2a5a, #7457ff);
-      display: grid;
-      place-items: center;
-      color: white;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap: 22px;
-      margin-bottom: 24px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hypothesis {
-      padding: 34px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 8px 12px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    .hypothesis h2 {
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.02;
-      letter-spacing: -1.9px;
-      max-width: 870px;
-      margin-bottom: 18px;
-    }
-
-    .hypothesis h2 span {
-      color: var(--primary);
-    }
-
-    .hypothesis p {
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.6;
-      max-width: 840px;
-    }
-
-    .hypothesis p strong {
-      color: var(--text);
-    }
-
-    .metric-card {
-      padding: 28px;
-      background: linear-gradient(160deg, var(--navy), #17286b 60%, var(--primary));
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 335px;
-    }
-
-    .metric-card h3 {
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-
-    .timer {
-      width: 170px;
-      height: 170px;
-      border-radius: 999px;
-      margin: 10px auto 18px;
-      background:
-        conic-gradient(var(--green) 0 70%, rgba(255,255,255,.18) 70% 100%);
-      display: grid;
-      place-items: center;
-    }
-
-    .timer-inner {
-      width: 125px;
-      height: 125px;
-      border-radius: 999px;
-      background: #111d4b;
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    .timer-inner b {
-      display: block;
-      font-size: 42px;
-      line-height: 1;
-    }
-
-    .timer-inner small {
-      color: #cbd5ff;
-      font-weight: 700;
-    }
-
-    .metric-card p {
-      color: #dce5ff;
-      line-height: 1.5;
-      font-size: 15px;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      margin: 28px 0 16px;
-    }
-
-    .section-title h2 {
-      font-size: 28px;
-      letter-spacing: -0.8px;
-    }
-
-    .section-title span {
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 14px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .mini-card {
-      padding: 22px;
-      min-height: 160px;
-    }
-
-    .mini-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 15px;
-      font-size: 22px;
-      background: var(--primary-soft);
-      color: var(--primary);
-    }
-
-    .mini-card h3 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
-
-    .mini-card p {
-      color: var(--muted);
-      line-height: 1.45;
-      font-size: 14px;
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 16px;
-    }
-
-    .panel {
-      padding: 24px;
-    }
-
-    .route-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 20px;
-    }
-
-    .route-title h3 {
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .route-title p {
-      color: var(--muted);
-      font-weight: 650;
-    }
-
-    .progress {
-      width: 110px;
-      height: 110px;
-      border-radius: 999px;
-      background: conic-gradient(var(--primary) 0 68%, #e9edfa 68% 100%);
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-    }
-
-    .progress div {
-      width: 78px;
-      height: 78px;
-      border-radius: 999px;
-      background: white;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      font-weight: 900;
-    }
-
-    .alert {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 15px;
-      border-radius: 16px;
-      background: var(--orange-soft);
-      color: #9a4d00;
-      font-weight: 800;
-      margin-bottom: 20px;
-    }
-
-    .checklist {
-      display: grid;
-      gap: 10px;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px 15px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: #fbfcff;
-    }
-
-    .row strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .row small {
-      color: var(--muted);
-    }
-
-    .badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .ok { background: var(--green-soft); color: var(--green); }
-    .pending { background: var(--orange-soft); color: #b95d00; }
-    .danger { background: var(--red-soft); color: var(--red); }
-    .review { background: var(--primary-soft); color: var(--primary); }
-
-    .map-card {
-      overflow: hidden;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-    }
-
-    .map-top {
-      padding: 22px 22px 12px;
-    }
-
-    .map-top h3 {
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-
-    .map-top p { color: var(--muted); }
-
-    .map {
-      margin: 0 22px;
-      min-height: 320px;
-      border-radius: 18px;
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(91, 61, 245, .08), rgba(22, 185, 120, .08)),
-        repeating-linear-gradient(0deg, #e7effc 0 1px, transparent 1px 38px),
-        repeating-linear-gradient(90deg, #e7effc 0 1px, transparent 1px 38px),
-        #f7fbff;
-      border: 1px solid #d9e4f5;
-    }
-
-    .map::before {
-      content: "";
-      position: absolute;
-      inset: 20px;
-      border: 3px dashed rgba(91, 61, 245, .55);
-      border-top-color: transparent;
-      border-left-color: transparent;
-      border-radius: 70% 30% 80% 20%;
-      transform: rotate(-12deg);
-    }
-
-    .pin {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px 999px 999px 0;
-      transform: rotate(-45deg);
-      background: var(--primary);
-      box-shadow: 0 0 0 8px rgba(91,61,245,.12);
-    }
-
-    .pin span {
-      position: absolute;
-      transform: rotate(45deg);
-      white-space: nowrap;
-      font-weight: 900;
-      color: var(--text);
-      font-size: 13px;
-      left: 25px;
-      top: 0;
-    }
-
-    .pin.one { left: 18%; top: 70%; background: var(--green); }
-    .pin.two { left: 58%; top: 42%; background: var(--primary); }
-    .pin.three { left: 78%; top: 20%; background: var(--red); }
-
-    .places {
-      padding: 18px 22px 24px;
-      display: grid;
-      gap: 10px;
-    }
-
-    .place {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .place:last-child { border-bottom: 0; }
-    .place strong { display: block; font-size: 14px; }
-    .place small { color: var(--muted); }
-
-    .btn {
-      border: 0;
-      background: var(--primary);
-      color: white;
-      border-radius: 12px;
-      padding: 10px 13px;
-      font-weight: 900;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      display: inline-flex;
-    }
-
-    .btn.secondary {
-      background: var(--primary-soft);
-      color: var(--primary);
-    }
-
-    .upload-area {
-      border: 2px dashed #c8cfff;
-      background: linear-gradient(180deg, #fbfcff, #f7f5ff);
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      margin-top: 14px;
-    }
-
-    .upload-area .big {
-      font-size: 52px;
-      margin-bottom: 12px;
-    }
-
-    .upload-area h3 {
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-
-    .upload-area p {
-      color: var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .footer-note {
-      margin-top: 22px;
-      padding: 18px 20px;
-      border-radius: 18px;
-      background: #eef2ff;
-      color: #445074;
-      border: 1px solid #dce3ff;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    @media (max-width: 1100px) {
-      .app { grid-template-columns: 1fr; }
-      aside { display: none; }
-      main { padding: 24px; }
-      .hero, .dashboard { grid-template-columns: 1fr; }
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 680px) {
-      .topbar { display: none; }
-      main { padding: 18px; }
-      .hypothesis { padding: 24px; }
-      .grid-4 { grid-template-columns: 1fr; }
-      .row { grid-template-columns: 1fr; }
-      .route-header { flex-direction: column; }
-    }
-  </style>
+  <title>SalSinMiedo — Interfaz V2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app">
-    <aside>
+  <!-- Controles CSS-only para cambiar de pantalla -->
+  <input class="screen-radio" type="radio" name="screen" id="screen-dashboard" checked>
+  <input class="screen-radio" type="radio" name="screen" id="screen-requisitos">
+  <input class="screen-radio" type="radio" name="screen" id="screen-verificador">
+  <input class="screen-radio" type="radio" name="screen" id="screen-costos">
+  <input class="screen-radio" type="radio" name="screen" id="screen-fuentes">
+
+  <div class="app-shell">
+    <aside class="sidebar">
       <div class="brand">
-        <div class="logo">S</div>
+        <div class="brand-mark">✈</div>
         <div>
           <h1>SalSinMiedo</h1>
-          <p>Tu copiloto migratorio</p>
+          <p>Tu camino seguro</p>
         </div>
       </div>
 
-      <nav>
-        <a class="active" href="#hipotesis">🏠 Hipótesis</a>
-        <a href="#valor">🧭 Propuesta</a>
-        <a href="#mockup">📋 Mockup</a>
-        <a href="#mapa">🗺️ Mapa</a>
-        <a href="#validacion">📤 Validación</a>
+      <nav class="nav">
+        <label for="screen-dashboard" class="nav-item nav-dashboard"><span>⌂</span>Inicio</label>
+        <label for="screen-dashboard" class="nav-item nav-route"><span>⌁</span>Mi Ruta</label>
+        <label for="screen-requisitos" class="nav-item nav-requisitos"><span>▣</span>Requisitos</label>
+        <label for="screen-verificador" class="nav-item nav-verificador"><span>◇</span>Verificador</label>
+        <label for="screen-costos" class="nav-item nav-costos"><span>▦</span>Costos</label>
+        <label for="screen-fuentes" class="nav-item nav-fuentes"><span>▤</span>Fuentes</label>
+        <label class="nav-item nav-muted"><span>♧</span>Notificaciones <b>3</b></label>
+        <label class="nav-item nav-muted"><span>○</span>Perfil</label>
       </nav>
 
       <div class="help-card">
-        <strong>Objetivo del prototipo</strong>
-        <span>Validar si los viajeros usan la app por al menos 15 minutos y suben documentos según destino y motivo de viaje.</span>
+        <div class="help-icon">☏</div>
+        <strong>¿Necesitas ayuda?</strong>
+        <span>Chatea con un experto</span>
+        <button>→</button>
       </div>
     </aside>
 
-    <main>
-      <div class="topbar">
-        <div class="search">🔎 Buscar trámites, requisitos, instituciones o fuentes oficiales...</div>
-        <div class="profile">
-          <div class="avatar">I</div>
-          Ismael
+    <main class="main">
+      <header class="topbar">
+        <div class="search">
+          <span>⌕</span>
+          <input aria-label="Buscar" placeholder="Buscar trámites, requisitos o instituciones..." />
+          <kbd>⌘ K</kbd>
         </div>
-      </div>
-
-      <section class="hero" id="hipotesis">
-        <div class="card hypothesis">
-          <div class="pill">🧪 Hipótesis de validación</div>
-          <h2>Creemos que los viajeros necesitan <span>información oficial y actualizada</span> para viajar sin miedo.</h2>
-          <p>
-            Los viajeros necesitan <strong>información actualizada en tiempo real, válida y respaldada por fuentes oficiales</strong>,
-            y <strong>utilizarán la aplicación durante al menos 15 minutos</strong>, lo cual se evidenciará mediante
-            <strong>la subida de sus documentos según su país de destino y motivo de viaje</strong>.
-          </p>
-        </div>
-
-        <div class="card metric-card">
-          <div>
-            <h3>Métrica principal</h3>
-            <p>Tiempo mínimo de interacción esperado con el prototipo.</p>
+        <div class="top-actions">
+          <button class="icon-btn">♢<em>3</em></button>
+          <button class="icon-btn">◌</button>
+          <div class="avatar"></div>
+          <div class="user-block">
+            <strong>Ismael</strong>
+            <span>Mi cuenta</span>
           </div>
-          <div class="timer">
-            <div class="timer-inner">
-              <div>
-                <b>15</b>
-                <small>minutos</small>
+          <span class="chevron">⌄</span>
+        </div>
+      </header>
+
+      <!-- PANTALLA 1: DASHBOARD -->
+      <section class="page page-dashboard">
+        <div class="page-title">
+          <h2>Hola, Ismael 👋</h2>
+          <p>Estamos construyendo tu camino seguro.</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="card route-card">
+            <div>
+              <span class="eyebrow">Tu ruta actual</span>
+              <h3>🇵🇪 Perú → 🇪🇸 España</h3>
+              <p class="motivo">▰ Motivo: <strong>Estudios</strong></p>
+            </div>
+            <div class="ring" style="--value:68"><span>68%</span></div>
+            <p class="ring-caption">Progreso general</p>
+          </article>
+
+          <article class="card warning-card">
+            <div class="warning-icon">△</div>
+            <div>
+              <h3>Tienes 3 requisitos críticos pendientes</h3>
+              <p>Atiende estos requisitos para evitar retrasos o rechazos en tu proceso.</p>
+              <label for="screen-requisitos" class="outline-btn">Ver requisitos</label>
+            </div>
+          </article>
+
+          <article class="card map-route-card">
+            <div class="card-head">
+              <h3>Tu ruta en el mapa</h3>
+              <label for="screen-fuentes">Ver mapa completo ↗</label>
+            </div>
+            <div class="world-map">
+              <span class="continent america"></span>
+              <span class="continent europe"></span>
+              <span class="continent africa"></span>
+              <span class="dash-path"></span>
+              <span class="pin pin-peru"></span>
+              <span class="pin pin-spain"></span>
+              <b class="label-peru">Perú</b>
+              <b class="label-spain">España</b>
+            </div>
+            <div class="places-card">
+              <h4>Lugares clave en tu ruta</h4>
+              <ul class="timeline mini">
+                <li><span></span><strong>MINREX – Perú</strong><small>Legalización y antecedentes</small></li>
+                <li><span></span><strong>MIGRACIONES – Perú</strong><small>Pasaporte y salida del país</small></li>
+                <li><span></span><strong>Consulado de España en Lima</strong><small>Visado de estudios</small></li>
+                <li><span class="green"></span><strong>España</strong><small>TIE – Tarjeta de Identidad de Extranjero</small></li>
+              </ul>
+            </div>
+          </article>
+
+          <div class="summary-row">
+            <article class="metric-card"><i>▣</i><strong>18</strong><span>Requisitos totales</span><small>12 completados</small></article>
+            <article class="metric-card"><i class="ok">✓</i><strong>12</strong><span>Completados</span><small>Último: Hoy</small></article>
+            <article class="metric-card"><i class="warn">◷</i><strong>3</strong><span>Pendientes críticos</span><small>Requieren tu acción</small></article>
+            <article class="metric-card"><i>▣</i><strong>5</strong><span>Próximas fechas</span><small>En los próximos 30 días</small></article>
+          </div>
+
+          <article class="card next-steps">
+            <h3>Próximos pasos recomendados</h3>
+            <div class="step-item">
+              <i>▤</i><div><strong>Sube tu pasaporte para verificar vigencia</strong><small>Requisito para solicitar el visado de estudios</small></div><b>Crítico</b><span>›</span>
+            </div>
+            <div class="step-item">
+              <i>▧</i><div><strong>Completa tu carta de admisión</strong><small>Documento obligatorio para el visado</small></div><b>Crítico</b><span>›</span>
+            </div>
+            <div class="step-item">
+              <i>◇</i><div><strong>Contrata tu seguro médico internacional</strong><small>Debe cubrir toda tu estancia en España</small></div><b class="blue">Importante</b><span>›</span>
+            </div>
+            <label for="screen-requisitos" class="text-link">Ver todos los pasos (6) ›</label>
+          </article>
+
+          <article class="card trust-card">
+            <h3>Confía en datos oficiales ♢</h3>
+            <p>Toda la información de SalSinMiedo proviene de fuentes gubernamentales y se actualiza constantemente.</p>
+            <label for="screen-fuentes">Más sobre nuestras fuentes ↗</label>
+            <div class="doc-illustration">✓</div>
+          </article>
+        </div>
+      </section>
+
+      <!-- PANTALLA 2: CHECKLIST -->
+      <section class="page page-requisitos">
+        <div class="page-title rowed">
+          <div>
+            <h2>Checklist documental</h2>
+            <p><strong>Perú → España (Estudios)</strong></p>
+            <p>Sigue y completa cada requisito para tu ruta de estudios en España.</p>
+          </div>
+          <button class="secondary-btn">↓ Descargar checklist</button>
+        </div>
+
+        <div class="check-header">
+          <div class="tabs">
+            <button class="active">Todos (13)</button><button>Completados (6)</button><button>Pendientes (5)</button><button>En revisión (1)</button><button>Con observaciones (1)</button>
+          </div>
+          <article class="card progress-widget">
+            <div><strong>Progreso del checklist</strong><b>68%</b></div>
+            <div class="progress"><span style="width:68%"></span></div>
+            <p>9 de 13 requisitos completados</p>
+          </article>
+        </div>
+
+        <div class="table-card">
+          <div class="table-toolbar"><span></span><button>↕ Prioridad ↓</button></div>
+          <div class="req-table">
+            <div class="thead"><span>Requisito</span><span>Estado</span><span>Prioridad</span><span>Vence el</span><span>Fuente oficial</span></div>
+            <div class="trow"><div><i class="green">▣</i><b>Pasaporte vigente</b><small>Vigente por al menos 6 meses desde la fecha de entrada a España.</small></div><span class="badge success">✓ Validado</span><span>↑ Alta</span><span>12/10/2026<br><small>(235 días)</small></span><a>Ministerio de Relaciones Exteriores – Perú ↗</a></div>
+            <div class="trow"><div><i class="green">▧</i><b>Carta de admisión</b><small>Emitida por la institución educativa española.</small></div><span class="badge success">✓ Validado</span><span>↑ Alta</span><span>30/07/2025<br><small>(130 días)</small></span><a>Universidades España universidades.gob.es ↗</a></div>
+            <div class="trow"><div><i class="red">▤</i><b>Visa de estudiante</b><small>Tipo D para estudios superiores (&gt;90 días).</small></div><span class="badge danger">◷ Pendiente</span><span>↑ Alta</span><span>15/08/2025<br><small>(146 días)</small></span><a>Consulado de España en Lima ↗</a></div>
+            <div class="trow"><div><i class="orange">◇</i><b>Seguro médico internacional</b><small>Cobertura mínima: 30.000 € para toda la estancia.</small></div><span class="badge warning">◷ En revisión</span><span>↑ Alta</span><span>15/08/2025<br><small>(146 días)</small></span><a>Ministerio de Inclusión, Seguridad Social y Migraciones ↗</a></div>
+            <div class="trow"><div><i class="green">▦</i><b>Comprobante de fondos</b><small>Medios económicos suficientes (≥ IPREM).</small></div><span class="badge success">✓ Validado</span><span>— Media</span><span>15/08/2025<br><small>(146 días)</small></span><a>Ministerio de Asuntos Exteriores, UE y Cooperación ↗</a></div>
+            <div class="trow"><div><i class="red">◎</i><b>Antecedentes penales / Apostilla</b><small>Emitidos en Perú, legalizados y apostillados.</small></div><span class="badge danger">! Requiere corrección</span><span>— Media</span><span>01/08/2025<br><small>(132 días)</small></span><a>Poder Judicial – Perú pj.gob.pe ↗</a></div>
+            <div class="trow"><div><i class="blue">▣</i><b>Pago de tasa consular</b><small>Comprobante de pago de la tasa de visado.</small></div><span class="badge neutral">◷ Pendiente</span><span>— Media</span><span>15/08/2025<br><small>(146 días)</small></span><a>BLS International blsspainperu.com ↗</a></div>
+          </div>
+        </div>
+        <div class="info-banner">ⓘ Los requisitos pueden variar según tu caso. Verifica siempre con fuentes oficiales antes de presentar tu solicitud. <label for="screen-fuentes">Ver notas importantes ↗</label></div>
+      </section>
+
+      <!-- PANTALLA 3: VERIFICADOR -->
+      <section class="page page-verificador">
+        <div class="page-title rowed compact-title">
+          <div>
+            <label for="screen-dashboard" class="back-link">← Volver</label>
+            <h2>Pre-verificador documental</h2>
+            <p>Sube tu documento y recibe un análisis automático de su validez y calidad.</p>
+          </div>
+        </div>
+
+        <div class="verifier-grid">
+          <article class="card upload-panel">
+            <div class="upload-box">
+              <div class="upload-icon">☁</div>
+              <h3>Sube tu documento</h3>
+              <p>Arrastra tu archivo aquí<br>o <a>selecciona un archivo</a></p>
+              <small>Formatos permitidos: PDF, JPG, JPEG, PNG · Máx. 10MB</small>
+            </div>
+            <button class="primary-btn">✦ Analizar documento</button>
+            <p class="micro">♢ Análisis automático con IA en segundos</p>
+          </article>
+
+          <article class="card advice-panel">
+            <h3>Consejos para mejores resultados</h3>
+            <ul>
+              <li>Asegúrate de que el documento esté completo y sin cortes.</li>
+              <li>La imagen debe ser nítida, bien iluminada y sin reflejos.</li>
+              <li>Evita filtros y ediciones. Usa escáner o cámara en alta resolución.</li>
+              <li>Verifica que los datos sean legibles.</li>
+            </ul>
+            <div class="privacy-note">♢ <strong>SalSinMiedo no almacena tus documentos.</strong><br><span>Tu privacidad y seguridad son nuestra prioridad.</span></div>
+          </article>
+
+          <article class="card document-panel">
+            <div class="card-head">
+              <h3>Documento cargado</h3>
+              <span class="badge success">Análisis completado</span>
+            </div>
+            <p><strong>Pasaporte_Ismael_Torres.pdf</strong><br><small>PDF · 1.2 MB · Subido hace 1 min.</small></p>
+            <h4>Vista previa</h4>
+            <div class="passport-mock">
+              <div class="passport-header">REINO DE ESPAÑA <b>BA1234567</b></div>
+              <div class="passport-body">
+                <div class="photo"></div>
+                <div class="passport-text">
+                  <span>TORRES GARCÍA</span><span>NOMBRE: ISMAEL</span><span>NACIONALIDAD: ESPAÑOLA</span><span>FECHA NAC: 15 04 1996</span><span>VENCE: 20 05 2031</span>
+                </div>
               </div>
+              <div class="mrz">P&lt;ESPTORRES&lt;&lt;GARCIA&lt;&lt;ISMAEL&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>BA12345672ESP9604157M3105201CAA123456&lt;&lt;&lt;&lt;42</div>
             </div>
-          </div>
-          <p>La hipótesis se fortalece si el usuario explora su ruta, revisa fuentes y sube documentos para pre-verificación.</p>
+            <button class="secondary-btn small">↓ Descargar documento</button>
+          </article>
+
+          <article class="card result-panel">
+            <h3>✦ Resultado del análisis</h3>
+            <div class="score-block">
+              <div class="ring green-ring" style="--value:85"><span>85<small>/100</small></span></div>
+              <b>Buen estado</b>
+            </div>
+            <div class="checks">
+              <p>✓ Autenticidad <b>Válido</b></p>
+              <p>✓ Integridad <b>Válido</b></p>
+              <p>✓ Legibilidad <b>Válido</b></p>
+              <p>✓ Vigencia <b>Válido</b></p>
+              <p>✓ Consistencia de datos <b>Válido</b></p>
+            </div>
+            <div class="status-note">♢ <strong>Documento válido con observaciones menores.</strong><br>Cumple con los requisitos básicos para trámites.</div>
+            <div class="risk-note"><strong>△ Observaciones y riesgos</strong><br><span class="badge success">Riesgo bajo</span> Se detectaron detalles que puedes revisar.<ul><li>Ligero reflejo en la zona superior derecha del documento.</li></ul></div>
+          </article>
         </div>
+        <div class="info-banner wide">▣ <strong>Este análisis es una pre-validación automatizada.</strong> La decisión final siempre la toma la autoridad competente. <label for="screen-fuentes">Ver requisitos oficiales ↗</label></div>
       </section>
 
-      <section id="valor">
-        <div class="section-title">
+      <!-- PANTALLA 4: COSTOS -->
+      <section class="page page-costos">
+        <div class="page-title">
+          <h2>Calculadora de costos</h2>
+          <p>Estimación de costos para tu ruta: <strong>Perú → España (Estudios)</strong></p>
+        </div>
+
+        <div class="cost-grid">
+          <article class="card cost-list">
+            <h3>Detalle de costos estimados</h3>
+            <p>Valores referenciales en euros (€). Verifica siempre en fuentes oficiales.</p>
+            <div class="cost-item"><i>▣</i><div><b>Pasaporte electrónico</b><span>Emitido por Reniec</span></div><strong>€ 120.00</strong></div>
+            <div class="cost-item"><i>▤</i><div><b>Visa de estudios (Tipo D)</b><span>Consulado de España</span></div><strong>€ 80.00</strong></div>
+            <div class="cost-item"><i>◇</i><div><b>Seguro médico internacional</b><span>Cobertura mínima: 30 días</span></div><strong>€ 300.00</strong></div>
+            <div class="cost-item"><i>✈</i><div><b>Vuelo aproximado</b><span>Lima (LIM) → Madrid (MAD)</span></div><strong>€ 2,800.00</strong></div>
+            <div class="cost-item"><i>▧</i><div><b>Traducciones y apostillas</b><span>Documentos académicos</span></div><strong>€ 250.00</strong></div>
+            <div class="cost-item"><i>▣</i><div><b>Fondos mínimos recomendados</b><span>Requisito para estudios</span></div><strong>€ 6,000.00</strong></div>
+          </article>
+
+          <article class="card cost-summary">
+            <div class="card-head"><h3>Resumen del estimado</h3><button>EUR⌄</button></div>
+            <span>Total estimado</span>
+            <h2>€ 9,550.00</h2>
+            <p>Aprox. S/ 37,340.20</p>
+            <div class="budget-card">
+              <h3>▦ Comparación con tu presupuesto</h3>
+              <div class="budget-row"><span>Tu presupuesto</span><span>Faltante</span></div>
+              <div class="budget-row strong"><b>S/ 40,000.00</b><b>S/ 0.00</b></div>
+              <div class="progress green"><span style="width:100%"></span></div>
+              <p>100% de tu presupuesto cubre el estimado.<br><strong>¡Tu presupuesto es suficiente!</strong></p>
+            </div>
+          </article>
+        </div>
+        <div class="info-banner purple">ⓘ <strong>Importante:</strong> Los valores mostrados son referenciales y pueden variar. Verifica siempre la información actualizada en las fuentes oficiales antes de tomar decisiones. <span class="calc-illus">▦</span></div>
+      </section>
+
+      <!-- PANTALLA 5: FUENTES -->
+      <section class="page page-fuentes">
+        <div class="page-title rowed">
           <div>
-            <h2>Cómo se expresa la hipótesis en el mockup</h2>
-            <span>Usuario + necesidad + solución + evidencia</span>
+            <h2>Fuentes oficiales y mapa de trámites</h2>
+            <p>Consulta dónde y cómo realizar tus trámites de forma segura.</p>
           </div>
+          <div class="search slim"><span>⌕</span><input placeholder="Buscar entidades o trámites" /></div>
         </div>
 
-        <div class="grid-4">
-          <div class="card mini-card">
-            <div class="mini-icon">👤</div>
-            <h3>Usuario objetivo</h3>
-            <p>Viajeros, estudiantes y jóvenes profesionales que desean ir al extranjero por estudios, trabajo o residencia.</p>
-          </div>
-          <div class="card mini-card">
-            <div class="mini-icon">⚠️</div>
-            <h3>Necesidad</h3>
-            <p>Información confiable, actualizada y fácil de entender para evitar errores, retrasos o estafas.</p>
-          </div>
-          <div class="card mini-card">
-            <div class="mini-icon">🛡️</div>
-            <h3>Solución</h3>
-            <p>Ruta personalizada con checklist, links oficiales, mapa de trámites y pre-verificación documental.</p>
-          </div>
-          <div class="card mini-card">
-            <div class="mini-icon">📤</div>
-            <h3>Evidencia</h3>
-            <p>El usuario permanece al menos 15 minutos y sube documentos según destino y motivo de viaje.</p>
-          </div>
+        <div class="sources-grid">
+          <article class="card source-list">
+            <h3>Fuentes oficiales y lugares de trámite</h3>
+            <div class="source-item"><i>🇪🇸</i><div><b>Consulado General de España en Lima</b><span>Trámites de visado y legalizaciones</span></div><a>Visitar sitio ↗</a></div>
+            <div class="source-item"><i>🇪🇸</i><div><b>Ministerio de Asuntos Exteriores de España</b><span>Información oficial de requisitos y normativas</span></div><a>Visitar sitio ↗</a></div>
+            <div class="source-item"><i>▣</i><div><b>RENIEC – Perú</b><span>Emisión de pasaportes</span></div><a>Visitar sitio ↗</a></div>
+            <div class="source-item"><i>⚖</i><div><b>Minjus – Perú</b><span>Antecedentes penales y apostillas</span></div><a>Visitar sitio ↗</a></div>
+            <div class="source-item"><i>◆</i><div><b>SUNAT – Perú</b><span>Constancia de no adeudo (de ser el caso)</span></div><a>Visitar sitio ↗</a></div>
+            <button class="more-source">ⓘ Ver más entidades oficiales ›</button>
+          </article>
+
+          <article class="card map-card-full">
+            <div class="map-tabs"><b>Mapa</b><span>Lista</span></div>
+            <div class="city-map">
+              <span class="road diagonal"></span><span class="road vertical"></span><span class="road horizontal"></span><span class="sea"></span>
+              <b class="district jesus">Jesús María</b><b class="district lince">Lince</b><b class="district san">San Isidro</b><b class="district mag">Magdalena<br>del Mar</b><b class="district mir">Miraflores</b><b class="district bar">Barranco</b>
+              <span class="map-pin red"></span><span class="map-pin blue"></span><span class="map-pin green"></span>
+              <div class="map-popup"><h3>Consulado General<br>de España en Lima</h3><p>Av. Salaverry 3240,<br>San Isidro 15076, Lima – Perú</p><p>Lun – Vie: 8:30 a.m. – 1:30 p.m.</p><a>⌁ Cómo llegar</a></div>
+              <button class="fullscreen">⛶</button>
+            </div>
+            <div class="legend"><span><i class="blue-dot"></i>Consulados</span><span><i class="red-dot"></i>Ministerios</span><span><i class="green-dot"></i>Trámites Perú</span><span><i class="orange-dot"></i>Otras entidades</span></div>
+          </article>
         </div>
+        <div class="info-banner">♢ SalSinMiedo muestra información oficial siempre que sea posible. Verifica los requisitos actualizados antes de realizar tu trámite.</div>
       </section>
-
-      <section class="dashboard" id="mockup">
-        <div class="card panel">
-          <div class="route-header">
-            <div class="route-title">
-              <h3>Mi ruta migratoria</h3>
-              <p>Perú 🇵🇪 → España 🇪🇸 · Motivo: Estudios</p>
-            </div>
-            <div class="progress"><div>68%</div></div>
-          </div>
-
-          <div class="alert">⚠️ Tienes 3 requisitos críticos pendientes</div>
-
-          <div class="checklist">
-            <div class="row">
-              <div><strong>Pasaporte vigente</strong><small>Vigente al menos 6 meses desde la fecha de entrada.</small></div>
-              <span class="badge ok">Validado</span>
-              <a class="btn secondary" href="#">Fuente</a>
-            </div>
-            <div class="row">
-              <div><strong>Visa de estudiante</strong><small>Tipo D para estudios superiores mayores a 90 días.</small></div>
-              <span class="badge danger">Pendiente</span>
-              <a class="btn secondary" href="#">Fuente</a>
-            </div>
-            <div class="row">
-              <div><strong>Seguro médico internacional</strong><small>Cobertura mínima recomendada para toda la estancia.</small></div>
-              <span class="badge review">En revisión</span>
-              <a class="btn secondary" href="#">Fuente</a>
-            </div>
-            <div class="row">
-              <div><strong>Comprobante de fondos</strong><small>Medios económicos suficientes según destino.</small></div>
-              <span class="badge pending">Pendiente</span>
-              <a class="btn secondary" href="#">Fuente</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card map-card" id="mapa">
-          <div class="map-top">
-            <h3>Mapa de trámites</h3>
-            <p>Lugares clave para completar la ruta.</p>
-          </div>
-          <div class="map">
-            <div class="pin one"><span>Perú</span></div>
-            <div class="pin two"><span>Consulado</span></div>
-            <div class="pin three"><span>España</span></div>
-          </div>
-          <div class="places">
-            <div class="place"><div><strong>RENIEC - Perú</strong><small>Emisión de pasaporte</small></div><a class="btn secondary" href="#">Ver</a></div>
-            <div class="place"><div><strong>MINJUS - Perú</strong><small>Antecedentes y apostillas</small></div><a class="btn secondary" href="#">Ver</a></div>
-            <div class="place"><div><strong>Consulado de España en Lima</strong><small>Visado de estudios</small></div><a class="btn secondary" href="#">Ver</a></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="dashboard" id="validacion">
-        <div class="card panel">
-          <h2>Subida de documentos</h2>
-          <p style="color: var(--muted); margin-top: 8px; line-height: 1.5;">Esta acción valida la hipótesis porque demuestra intención real de uso: el usuario no solo mira información, también avanza con sus propios documentos.</p>
-          <div class="upload-area">
-            <div class="big">☁️</div>
-            <h3>Sube tu documento</h3>
-            <p>Arrastra tu pasaporte, visa, carta de admisión o certificado aquí.</p>
-            <a class="btn" href="#">Analizar documento</a>
-          </div>
-        </div>
-
-        <div class="card panel">
-          <h2>Resultado simulado</h2>
-          <div style="height: 14px"></div>
-          <div class="checklist">
-            <div class="row">
-              <div><strong>Documento legible</strong><small>La imagen tiene buena calidad.</small></div>
-              <span class="badge ok">Cumple</span>
-              <span></span>
-            </div>
-            <div class="row">
-              <div><strong>Vigencia detectada</strong><small>La fecha se encuentra dentro del rango esperado.</small></div>
-              <span class="badge ok">Cumple</span>
-              <span></span>
-            </div>
-            <div class="row">
-              <div><strong>Campos obligatorios</strong><small>Nombre, número y nacionalidad presentes.</small></div>
-              <span class="badge ok">Cumple</span>
-              <span></span>
-            </div>
-            <div class="row">
-              <div><strong>Riesgo documental</strong><small>Se recomienda revisar antes de enviar.</small></div>
-              <span class="badge pending">Moderado</span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="footer-note">
-        <strong>Aviso:</strong> SalSinMiedo no reemplaza la decisión de consulados, migraciones o entidades oficiales. El prototipo organiza información, muestra fuentes y ayuda a reducir errores antes de iniciar o presentar un trámite.
-      </div>
     </main>
   </div>
 </body>
 </html>
+  
