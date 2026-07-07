@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SalSinMiedo | Interfaz de hipótesis</title>
+  <title>SalSinMiedo | Ruta migratoria segura</title>
+
   <style>
     :root {
       --bg: #f6f8ff;
@@ -29,6 +30,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
@@ -39,10 +44,292 @@
       min-height: 100vh;
     }
 
-    .app {
+    /* ============ AUTH SCREENS ============ */
+    .auth-wrap {
+      min-height: 100vh;
       display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .auth-side {
+      background: linear-gradient(160deg, var(--navy), #241a7a 55%, var(--primary));
+      color: white;
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-side::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -140px;
+      bottom: -140px;
+      background: rgba(255,255,255,.08);
+      border-radius: 50%;
+    }
+
+    .auth-side::before {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      left: -100px;
+      top: -100px;
+      background: rgba(255,255,255,.06);
+      border-radius: 50%;
+    }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .auth-brand .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(6px);
+      font-weight: 900;
+      font-size: 24px;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+
+    .auth-brand h1 {
+      font-size: 24px;
+    }
+
+    .auth-brand p {
+      font-size: 13px;
+      color: rgba(255,255,255,.7);
+      margin-top: 3px;
+    }
+
+    .auth-pitch {
+      position: relative;
+      z-index: 2;
+      max-width: 460px;
+    }
+
+    .auth-pitch h2 {
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.12;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .auth-pitch p {
+      color: rgba(255,255,255,.78);
+      line-height: 1.6;
+      font-size: 15.5px;
+    }
+
+    .auth-pitch-list {
+      margin-top: 26px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .auth-pitch-list div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14.5px;
+      color: rgba(255,255,255,.9);
+    }
+
+    .auth-pitch-list span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #c6f6e4;
+      flex-shrink: 0;
+    }
+
+    .auth-foot {
+      position: relative;
+      z-index: 2;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.55);
+    }
+
+    .auth-form-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--soft);
+      border-radius: 14px;
+      padding: 5px;
+      margin-bottom: 28px;
+    }
+
+    .auth-tab {
+      border: none;
+      background: transparent;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14.5px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .auth-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 6px 16px rgba(14,27,76,.08);
+    }
+
+    .auth-title {
+      font-size: 24px;
+      letter-spacing: -.6px;
+      margin-bottom: 6px;
+    }
+
+    .auth-sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 26px;
+    }
+
+    .auth-field {
+      margin-bottom: 16px;
+    }
+
+    .auth-field label {
+      display: block;
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 7px;
+      color: #26315f;
+    }
+
+    .auth-field input,
+    .auth-field select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px 14px;
+      outline: none;
+      background: white;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14.5px;
+      transition: .2s ease;
+    }
+
+    .auth-field input:focus,
+    .auth-field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(91,61,245,.12);
+    }
+
+    .auth-row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .auth-submit {
+      width: 100%;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), #472fd6);
+      color: white;
+      padding: 15px;
+      border-radius: 14px;
+      font-weight: 850;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 14px 28px rgba(91,61,245,.28);
+      transition: .2s ease;
+      margin-top: 6px;
+    }
+
+    .auth-submit:hover {
+      transform: translateY(-2px);
+    }
+
+    .auth-msg {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      font-weight: 700;
+      display: none;
+    }
+
+    .auth-msg.show {
+      display: block;
+    }
+
+    .auth-msg.error {
+      background: rgba(240,62,62,.10);
+      color: #c92a2a;
+    }
+
+    .auth-msg.success {
+      background: rgba(18,184,134,.12);
+      color: #087f5b;
+    }
+
+    .auth-demo {
+      margin-top: 22px;
+      padding: 14px 16px;
+      background: var(--soft);
+      border-radius: 13px;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .auth-view {
+      display: none;
+    }
+
+    .auth-view.active {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .auth-wrap {
+        grid-template-columns: 1fr;
+      }
+      .auth-side {
+        display: none;
+      }
+    }
+
+    /* ============ APP ============ */
+    .app {
+      display: none;
       grid-template-columns: 280px 1fr;
       min-height: 100vh;
+    }
+
+    .app.active {
+      display: grid;
     }
 
     aside {
@@ -65,15 +352,15 @@
     }
 
     .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
       display: grid;
       place-items: center;
       background: linear-gradient(135deg, var(--primary), #9d7bff);
       box-shadow: 0 10px 28px rgba(91, 61, 245, 0.45);
       font-weight: 900;
-      font-size: 22px;
+      font-size: 23px;
     }
 
     .brand h1 {
@@ -101,12 +388,32 @@
       color: rgba(255,255,255,.78);
       font-weight: 650;
       font-size: 15px;
+      text-decoration: none;
+      transition: .25s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
     }
 
+    .nav-item:hover,
     .nav-item.active {
       color: white;
       background: linear-gradient(135deg, var(--primary), #4126c8);
       box-shadow: 0 12px 26px rgba(91, 61, 245, 0.34);
+      transform: translateX(4px);
+    }
+
+    .nav-item.logout {
+      margin-top: 4px;
+      color: rgba(255,255,255,.55);
+    }
+
+    .nav-item.logout:hover {
+      background: rgba(240,62,62,.22);
+      box-shadow: none;
     }
 
     .help {
@@ -161,6 +468,20 @@
       padding: 10px 14px;
     }
 
+    .user-info {
+      line-height: 1.3;
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .user-info small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .avatar {
       width: 38px;
       height: 38px;
@@ -180,7 +501,7 @@
     }
 
     .panel {
-      background: rgba(255,255,255,.86);
+      background: rgba(255,255,255,.88);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -218,6 +539,42 @@
       font-size: 18px;
       line-height: 1.65;
       max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), #472fd6);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 850;
+      box-shadow: 0 12px 24px rgba(91,61,245,.24);
+      cursor: pointer;
+      text-decoration: none;
+      transition: .25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(91,61,245,.32);
+    }
+
+    .btn.secondary {
+      background: white;
+      color: var(--primary);
+      border: 1px solid #d8ddff;
+      box-shadow: none;
     }
 
     .hypothesis {
@@ -269,6 +626,12 @@
       border-radius: 17px;
       background: var(--soft);
       border: 1px solid #e1e6ff;
+      transition: .25s ease;
+    }
+
+    .metric:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(14,27,76,.08);
     }
 
     .metric strong {
@@ -298,6 +661,7 @@
     .section-title p {
       color: var(--muted);
       font-size: 14px;
+      margin-top: 4px;
     }
 
     .grid-4 {
@@ -312,6 +676,12 @@
       border-radius: 19px;
       padding: 21px;
       box-shadow: 0 10px 25px rgba(14, 27, 76, 0.06);
+      transition: .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(14, 27, 76, 0.11);
     }
 
     .icon {
@@ -337,6 +707,34 @@
       font-size: 14px;
     }
 
+    .form-panel {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      align-items: end;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #26315f;
+    }
+
+    .field select,
+    .field input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+      outline: none;
+      background: white;
+      color: var(--text);
+      font-weight: 650;
+    }
+
     .mockup {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -357,6 +755,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 18px;
+      gap: 12px;
     }
 
     .screen-header h4 {
@@ -370,6 +769,7 @@
       color: #087f5b;
       font-size: 12px;
       font-weight: 850;
+      white-space: nowrap;
     }
 
     .route {
@@ -410,7 +810,9 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: linear-gradient(rgba(45,73,123,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(45,73,123,.08) 1px, transparent 1px);
+      background-image:
+        linear-gradient(rgba(45,73,123,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,73,123,.08) 1px, transparent 1px);
       background-size: 28px 28px;
     }
 
@@ -424,8 +826,17 @@
       z-index: 2;
     }
 
-    .pin.peru { left: 44px; bottom: 40px; }
-    .pin.spain { right: 48px; top: 42px; background: var(--danger); box-shadow: 0 0 0 8px rgba(240,62,62,.15); }
+    .pin.peru {
+      left: 44px;
+      bottom: 40px;
+    }
+
+    .pin.destino {
+      right: 48px;
+      top: 42px;
+      background: var(--danger);
+      box-shadow: 0 0 0 8px rgba(240,62,62,.15);
+    }
 
     .dash {
       position: absolute;
@@ -453,7 +864,9 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .row:last-child { border-bottom: none; }
+    .row:last-child {
+      border-bottom: none;
+    }
 
     .row strong {
       display: block;
@@ -472,9 +885,20 @@
       font-weight: 850;
     }
 
-    .ok { background: rgba(18,184,134,.12); color: #087f5b; }
-    .warn { background: rgba(245,159,0,.13); color: #c56a00; }
-    .bad { background: rgba(240,62,62,.10); color: #c92a2a; }
+    .ok {
+      background: rgba(18,184,134,.12);
+      color: #087f5b;
+    }
+
+    .warn {
+      background: rgba(245,159,0,.13);
+      color: #c56a00;
+    }
+
+    .bad {
+      background: rgba(240,62,62,.10);
+      color: #c92a2a;
+    }
 
     .upload {
       min-height: 170px;
@@ -486,6 +910,12 @@
       text-align: center;
       color: var(--muted);
       padding: 20px;
+      transition: .25s ease;
+    }
+
+    .upload:hover {
+      border-color: var(--primary);
+      background: #f7f8ff;
     }
 
     .upload strong {
@@ -495,19 +925,8 @@
       font-size: 17px;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border: none;
-      background: linear-gradient(135deg, var(--primary), #472fd6);
-      color: white;
-      padding: 13px 18px;
-      border-radius: 14px;
-      font-weight: 850;
-      margin-top: 14px;
-      box-shadow: 0 12px 24px rgba(91,61,245,.24);
+    .file-input {
+      display: none;
     }
 
     .cost-total {
@@ -515,6 +934,55 @@
       letter-spacing: -1.3px;
       color: #091132;
       margin: 8px 0;
+    }
+
+    .sources {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .source-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(14, 27, 76, 0.06);
+    }
+
+    .source-card h4 {
+      margin-bottom: 8px;
+    }
+
+    .source-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .validation {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .validation-box {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .validation-box h4 {
+      margin-bottom: 12px;
+    }
+
+    .validation-box ul {
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
     }
 
     .footer-note {
@@ -527,23 +995,176 @@
       line-height: 1.55;
     }
 
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
     @media (max-width: 1100px) {
-      .app { grid-template-columns: 1fr; }
-      aside { position: relative; height: auto; }
-      .hero, .mockup, .route { grid-template-columns: 1fr; }
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: relative;
+        height: auto;
+      }
+
+      .hero,
+      .mockup,
+      .route,
+      .validation {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-4,
+      .sources,
+      .form-panel {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 680px) {
-      main { padding: 20px; }
-      .topbar { flex-direction: column; align-items: stretch; }
-      .grid-4 { grid-template-columns: 1fr; }
-      aside { padding: 24px 18px; }
+      main {
+        padding: 20px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .grid-4,
+      .sources,
+      .form-panel {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        padding: 24px 18px;
+      }
+
+      .screen-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
+
+  <!-- ============ PANTALLAS DE AUTENTICACIÓN ============ -->
+  <div class="auth-wrap" id="authWrap">
+    <div class="auth-side">
+      <div class="auth-brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>SalSinMiedo</h1>
+          <p>Tu camino seguro</p>
+        </div>
+      </div>
+
+      <div class="auth-pitch">
+        <h2>Cada viajero tiene su propia ruta migratoria</h2>
+        <p>
+          Crea tu cuenta para guardar tu ruta, tu checklist de requisitos y tus documentos.
+          Cada usuario ve únicamente su propia información.
+        </p>
+        <div class="auth-pitch-list">
+          <div><span class="dot"></span> Ruta personalizada por destino y motivo de viaje</div>
+          <div><span class="dot"></span> Checklist documental guardado en tu cuenta</div>
+          <div><span class="dot"></span> Subida de documentos privada por usuario</div>
+        </div>
+      </div>
+
+      <div class="auth-foot">
+        Prototipo — Proyecto de Emprendimiento e Innovación 2026-I.<br>
+        Por ahora las cuentas se guardan en este navegador; luego se conectarán a una base de datos real.
+      </div>
+    </div>
+
+    <div class="auth-form-col">
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tabLoginBtn" onclick="switchAuthTab('login')">Iniciar sesión</button>
+          <button class="auth-tab" id="tabRegisterBtn" onclick="switchAuthTab('register')">Crear cuenta</button>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="auth-view active" id="viewLogin">
+          <div class="auth-title">Bienvenido de nuevo</div>
+          <div class="auth-sub">Ingresa con tu usuario para ver tu ruta migratoria.</div>
+
+          <div class="auth-field">
+            <label>Usuario o correo</label>
+            <input type="text" id="loginUser" placeholder="ej. maria.cusco" />
+          </div>
+
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <input type="password" id="loginPass" placeholder="••••••••" />
+          </div>
+
+          <button class="auth-submit" onclick="handleLogin()">Ingresar</button>
+
+          <div class="auth-msg" id="loginMsg"></div>
+
+          <div class="auth-demo">
+            💡 ¿Primera vez aquí? Ve a la pestaña <strong>Crear cuenta</strong>. Cada usuario que se registre
+            tendrá su propia ruta, checklist y documentos guardados por separado en este navegador.
+          </div>
+        </div>
+
+        <!-- REGISTRO -->
+        <div class="auth-view" id="viewRegister">
+          <div class="auth-title">Crea tu cuenta</div>
+          <div class="auth-sub">Así podrás guardar tu ruta migratoria y tus avances.</div>
+
+          <div class="auth-field">
+            <label>Nombre completo</label>
+            <input type="text" id="regName" placeholder="ej. María Quispe" />
+          </div>
+
+          <div class="auth-field">
+            <label>Usuario</label>
+            <input type="text" id="regUser" placeholder="ej. maria.cusco" />
+          </div>
+
+          <div class="auth-row2">
+            <div class="auth-field">
+              <label>Contraseña</label>
+              <input type="password" id="regPass" placeholder="mín. 4 caracteres" />
+            </div>
+            <div class="auth-field">
+              <label>Confirmar</label>
+              <input type="password" id="regPass2" placeholder="repite la contraseña" />
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label>País de origen</label>
+            <select id="regOrigen">
+              <option>Perú 🇵🇪</option>
+              <option>Bolivia 🇧🇴</option>
+              <option>Colombia 🇨🇴</option>
+              <option>Ecuador 🇪🇨</option>
+            </select>
+          </div>
+
+          <button class="auth-submit" onclick="handleRegister()">Crear cuenta</button>
+
+          <div class="auth-msg" id="registerMsg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ APP PRINCIPAL ============ -->
+  <div class="app" id="appWrap">
+
     <aside>
       <div>
         <div class="brand">
@@ -553,15 +1174,18 @@
             <p>Tu camino seguro</p>
           </div>
         </div>
+
         <nav>
-          <div class="nav-item active">🏠 Inicio</div>
-          <div class="nav-item">🧭 Mi Ruta</div>
-          <div class="nav-item">📋 Requisitos</div>
-          <div class="nav-item">🛡️ Verificador</div>
-          <div class="nav-item">💶 Costos</div>
-          <div class="nav-item">📍 Fuentes y mapa</div>
+          <a href="#inicio" class="nav-item active">🏠 Inicio</a>
+          <a href="#ruta" class="nav-item">🧭 Mi Ruta</a>
+          <a href="#requisitos" class="nav-item">📋 Requisitos</a>
+          <a href="#documentos" class="nav-item">🛡️ Verificador</a>
+          <a href="#costos" class="nav-item">💶 Costos</a>
+          <a href="#fuentes" class="nav-item">📍 Fuentes y mapa</a>
+          <button class="nav-item logout" onclick="handleLogout()">🚪 Cerrar sesión</button>
         </nav>
       </div>
+
       <div class="help">
         <strong>Hipótesis a validar</strong>
         <p>Los viajeros usarán la app si encuentran información oficial, actualizada y útil para su ruta.</p>
@@ -571,24 +1195,56 @@
     <main>
       <div class="topbar">
         <div class="search">🔎 Buscar trámites, requisitos, documentos o instituciones...</div>
-        <div class="user"><div class="avatar">U</div><strong>Usuario</strong></div>
+        <div class="user">
+          <div class="avatar" id="userAvatar">U</div>
+          <div class="user-info">
+            <strong id="userNameTag">Usuario</strong>
+            <small id="userOrigenTag">Perú 🇵🇪</small>
+          </div>
+        </div>
       </div>
 
-      <section class="hero">
+      <section class="hero" id="inicio">
         <div class="panel hero-main">
           <div class="badge">🧪 Hipótesis — Crear · Medir · Aprender</div>
+
           <h2>SalSinMiedo: ruta migratoria segura</h2>
-          <p class="lead">Una interfaz para organizar la ruta del viajero con requisitos, fuentes oficiales, mapa de lugares de trámite, costos estimados y subida de documentos.</p>
+
+          <p class="lead">
+            Una interfaz para organizar la ruta del viajero con requisitos, fuentes oficiales,
+            mapa de lugares de trámite, costos estimados y subida de documentos.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#ruta" class="btn">Crear mi ruta</a>
+            <a href="#requisitos" class="btn secondary">Ver requisitos</a>
+          </div>
 
           <div class="hypothesis">
-            <p><span>Creemos que:</span> los viajeros necesitan información actualizada en tiempo real, válida y respaldada por fuentes oficiales, y utilizarán la aplicación durante al menos 15 minutos, lo cual se evidenciará mediante la subida de sus documentos según su país de destino y motivo de viaje.</p>
+            <p>
+              <span>Creemos que:</span> los viajeros necesitan información actualizada en tiempo real,
+              válida y respaldada por fuentes oficiales, y utilizarán la aplicación durante al menos
+              15 minutos, lo cual se evidenciará mediante la subida de sus documentos según su país
+              de destino y motivo de viaje.
+            </p>
           </div>
         </div>
 
         <div class="panel hero-side">
-          <div class="metric"><strong>15 min</strong><p>Tiempo mínimo esperado de uso del prototipo.</p></div>
-          <div class="metric"><strong>Ruta</strong><p>Flujo principal: destino, requisitos, fuentes, mapa y documentos.</p></div>
-          <div class="metric"><strong>Upload</strong><p>Evidencia clave: subida de documentos por el usuario.</p></div>
+          <div class="metric">
+            <strong>15 min</strong>
+            <p>Tiempo mínimo esperado de uso del prototipo.</p>
+          </div>
+
+          <div class="metric">
+            <strong>Ruta</strong>
+            <p>Destino, requisitos, fuentes, mapa y documentos.</p>
+          </div>
+
+          <div class="metric">
+            <strong>Upload</strong>
+            <p>Evidencia clave: subida de documentos por el usuario.</p>
+          </div>
         </div>
       </section>
 
@@ -605,21 +1261,65 @@
           <h4>Usuario</h4>
           <p>Viajeros que desean estudiar, trabajar o realizar trámites en otro país.</p>
         </article>
+
         <article class="card">
           <div class="icon">⚠️</div>
           <h4>Necesidad</h4>
           <p>Información clara, actualizada y confiable para evitar errores y retrasos.</p>
         </article>
+
         <article class="card">
           <div class="icon">🖥️</div>
           <h4>Solución</h4>
           <p>Ruta personalizada con checklist, mapa, fuentes oficiales y verificador documental.</p>
         </article>
+
         <article class="card">
           <div class="icon">📤</div>
           <h4>Evidencia</h4>
           <p>Uso mínimo de 15 minutos y subida de documentos según destino y motivo.</p>
         </article>
+      </section>
+
+      <div class="section-title" id="ruta">
+        <div>
+          <h3>Crear ruta personalizada</h3>
+          <p>El usuario selecciona país de origen, destino y motivo de viaje.</p>
+        </div>
+      </div>
+
+      <section class="panel form-panel">
+        <div class="field">
+          <label>País de origen</label>
+          <select id="origen">
+            <option>Perú 🇵🇪</option>
+            <option>Bolivia 🇧🇴</option>
+            <option>Colombia 🇨🇴</option>
+            <option>Ecuador 🇪🇨</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>País de destino</label>
+          <select id="destino">
+            <option>España 🇪🇸</option>
+            <option>Chile 🇨🇱</option>
+            <option>Argentina 🇦🇷</option>
+            <option>Estados Unidos 🇺🇸</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Motivo de viaje</label>
+          <select id="motivo">
+            <option>Estudios</option>
+            <option>Trabajo</option>
+            <option>Turismo</option>
+            <option>Reunificación familiar</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="generarRuta()">Generar ruta</button>
       </section>
 
       <div class="section-title">
@@ -633,64 +1333,400 @@
         <article class="screen">
           <div class="screen-header">
             <h4>Mi Ruta</h4>
-            <span class="pill">68% avanzado</span>
+            <span class="pill" id="avanceTexto">68% avanzado</span>
           </div>
+
           <div class="route">
             <div>
-              <p><strong>Perú 🇵🇪 → España 🇪🇸</strong></p>
-              <p style="color:var(--muted); margin-top:6px;">Motivo: Estudios</p>
-              <div class="progress"><span></span></div>
+              <p><strong id="rutaTexto">Perú 🇵🇪 → España 🇪🇸</strong></p>
+              <p style="color:var(--muted); margin-top:6px;" id="motivoTexto">Motivo: Estudios</p>
+
+              <div class="progress">
+                <span id="barraAvance"></span>
+              </div>
+
               <p style="color:var(--danger); font-weight:800;">3 requisitos críticos pendientes</p>
             </div>
+
             <div class="map">
               <div class="pin peru"></div>
-              <div class="pin spain"></div>
+              <div class="pin destino"></div>
               <div class="dash"></div>
             </div>
           </div>
         </article>
 
-        <article class="screen">
+        <article class="screen" id="requisitos">
           <div class="screen-header">
             <h4>Checklist documental</h4>
             <span class="pill">Fuentes oficiales</span>
           </div>
-          <div class="checklist">
-            <div class="row"><div><strong>Pasaporte vigente</strong><small>RENIEC / Migraciones Perú</small></div><span class="status ok">Validado</span></div>
-            <div class="row"><div><strong>Visa de estudiante</strong><small>Consulado de España en Lima</small></div><span class="status bad">Pendiente</span></div>
-            <div class="row"><div><strong>Seguro médico internacional</strong><small>Requisito para estancia</small></div><span class="status warn">En revisión</span></div>
-            <div class="row"><div><strong>Comprobante de fondos</strong><small>Medios económicos suficientes</small></div><span class="status bad">Corregir</span></div>
-          </div>
-        </article>
 
-        <article class="screen">
-          <div class="screen-header">
-            <h4>Subida de documentos</h4>
-            <span class="pill">Evidencia de uso</span>
-          </div>
-          <div class="upload">
-            <div>
-              <div style="font-size:42px; margin-bottom:10px;">☁️</div>
-              <strong>Sube tu documento</strong>
-              <p>PDF, JPG o PNG · máximo 10 MB</p>
-              <button class="btn">Analizar documento</button>
+          <div class="checklist">
+            <div class="row">
+              <div>
+                <strong>Pasaporte vigente</strong>
+                <small>RENIEC / Migraciones Perú</small>
+              </div>
+              <span class="status ok">Validado</span>
+            </div>
+
+            <div class="row">
+              <div>
+                <strong>Visa según motivo de viaje</strong>
+                <small>Consulado o embajada del país destino</small>
+              </div>
+              <span class="status bad">Pendiente</span>
+            </div>
+
+            <div class="row">
+              <div>
+                <strong>Seguro médico internacional</strong>
+                <small>Requisito para estancia temporal o prolongada</small>
+              </div>
+              <span class="status warn">En revisión</span>
+            </div>
+
+            <div class="row">
+              <div>
+                <strong>Comprobante de fondos</strong>
+                <small>Medios económicos suficientes</small>
+              </div>
+              <span class="status bad">Corregir</span>
             </div>
           </div>
         </article>
 
-        <article class="screen">
+        <article class="screen" id="documentos">
+          <div class="screen-header">
+            <h4>Subida de documentos</h4>
+            <span class="pill">Evidencia de uso</span>
+          </div>
+
+          <label class="upload" for="archivo">
+            <div>
+              <div style="font-size:42px; margin-bottom:10px;">☁️</div>
+              <strong id="fileName">Sube tu documento</strong>
+              <p>PDF, JPG o PNG · máximo 10 MB</p>
+              <span class="btn" style="margin-top:14px;">Seleccionar archivo</span>
+            </div>
+          </label>
+
+          <input class="file-input" type="file" id="archivo" onchange="mostrarArchivo()" />
+
+          <button class="btn" style="margin-top:14px;" onclick="analizarDocumento()">Analizar documento</button>
+        </article>
+
+        <article class="screen" id="costos">
           <div class="screen-header">
             <h4>Costos y lugares</h4>
             <span class="pill">Ruta segura</span>
           </div>
+
           <p style="color:var(--muted);">Estimación referencial para estudiar en España.</p>
+
           <div class="cost-total">€ 4,480</div>
-          <div class="row"><div><strong>Consulado de España en Lima</strong><small>Visado y legalizaciones</small></div><span class="status ok">Ver mapa</span></div>
-          <div class="row"><div><strong>RENIEC / Migraciones</strong><small>Pasaporte y salida del país</small></div><span class="status ok">Link</span></div>
+
+          <div class="row">
+            <div>
+              <strong>Consulado de España en Lima</strong>
+              <small>Visado y legalizaciones</small>
+            </div>
+            <span class="status ok">Ver mapa</span>
+          </div>
+
+          <div class="row">
+            <div>
+              <strong>RENIEC / Migraciones</strong>
+              <small>Pasaporte y salida del país</small>
+            </div>
+            <span class="status ok">Link</span>
+          </div>
         </article>
       </section>
 
+      <div class="section-title" id="fuentes">
+        <div>
+          <h3>Fuentes oficiales sugeridas</h3>
+          <p>La app debe mostrar información respaldada por instituciones confiables.</p>
+        </div>
+      </div>
+
+      <section class="sources">
+        <article class="source-card">
+          <h4>🌐 Migraciones</h4>
+          <p>Información sobre pasaporte, salida del país, permisos y trámites migratorios.</p>
+        </article>
+
+        <article class="source-card">
+          <h4>🏛️ Consulados</h4>
+          <p>Requisitos de visa, citas, legalizaciones y documentación del país destino.</p>
+        </article>
+
+        <article class="source-card">
+          <h4>📚 Universidades</h4>
+          <p>Cartas de admisión, matrículas, seguros, pagos y requisitos para estudiantes.</p>
+        </article>
+      </section>
+
+      <div class="section-title">
+        <div>
+          <h3>Validación de la hipótesis</h3>
+          <p>Esta parte ayuda a explicar cómo se medirá si la propuesta funciona.</p>
+        </div>
+      </div>
+
+      <section class="panel validation">
+        <div class="validation-box">
+          <h4>📌 Qué se medirá</h4>
+          <ul>
+            <li>Tiempo de uso del prototipo.</li>
+            <li>Cantidad de requisitos revisados.</li>
+            <li>Documentos subidos por el usuario.</li>
+            <li>Interés en consultar fuentes oficiales.</li>
+          </ul>
+        </div>
+
+        <div class="validation-box">
+          <h4>✅ Criterio de éxito</h4>
+          <ul>
+            <li>El usuario permanece al menos 15 minutos.</li>
+            <li>Completa su ruta migratoria.</li>
+            <li>Sube al menos un documento.</li>
+            <li>Identifica trámites pendientes con claridad.</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="footer-note">
+        <strong>Nota del prototipo:</strong>
+        esta interfaz representa una propuesta inicial para validar la hipótesis del proyecto.
+        Todavía no reemplaza información oficial, pero sirve para probar si los usuarios necesitan
+        una herramienta que organice sus trámites migratorios de forma clara y segura.
+      </div>
+
+      <footer>
+        SalSinMiedo — Proyecto de Emprendimiento e Innovación 2026-I
+      </footer>
+
     </main>
   </div>
+
+  <script>
+    /* =========================================================
+       CAPA DE AUTENTICACIÓN (PROTOTIPO)
+       -----------------------------------------------------------
+       Todavía no hay backend ni base de datos real. Mientras tanto,
+       las cuentas y los datos de cada usuario se guardan en el
+       localStorage del navegador, bajo claves separadas por usuario,
+       para simular que "cada quien tiene su propio usuario".
+       Cuando se cree la base de datos, esto se reemplaza por
+       llamadas reales a una API (fetch/axios) sin tocar el resto
+       de la interfaz.
+    ========================================================= */
+
+    const USERS_KEY = "ssm_users";
+    const SESSION_KEY = "ssm_session";
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem(USERS_KEY) || "{}");
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    }
+
+    function getUserDataKey(username) {
+      return "ssm_data_" + username;
+    }
+
+    function getUserData(username) {
+      return JSON.parse(localStorage.getItem(getUserDataKey(username)) || "{}");
+    }
+
+    function saveUserData(username, data) {
+      localStorage.setItem(getUserDataKey(username), JSON.stringify(data));
+    }
+
+    function switchAuthTab(tab) {
+      document.getElementById("tabLoginBtn").classList.toggle("active", tab === "login");
+      document.getElementById("tabRegisterBtn").classList.toggle("active", tab === "register");
+      document.getElementById("viewLogin").classList.toggle("active", tab === "login");
+      document.getElementById("viewRegister").classList.toggle("active", tab === "register");
+      hideMsg("loginMsg");
+      hideMsg("registerMsg");
+    }
+
+    function showMsg(id, text, type) {
+      const el = document.getElementById(id);
+      el.textContent = text;
+      el.className = "auth-msg show " + type;
+    }
+
+    function hideMsg(id) {
+      const el = document.getElementById(id);
+      el.className = "auth-msg";
+    }
+
+    function handleRegister() {
+      const name = document.getElementById("regName").value.trim();
+      const username = document.getElementById("regUser").value.trim().toLowerCase();
+      const pass = document.getElementById("regPass").value;
+      const pass2 = document.getElementById("regPass2").value;
+      const origen = document.getElementById("regOrigen").value;
+
+      if (!name || !username || !pass || !pass2) {
+        showMsg("registerMsg", "Completa todos los campos para continuar.", "error");
+        return;
+      }
+      if (pass.length < 4) {
+        showMsg("registerMsg", "La contraseña debe tener al menos 4 caracteres.", "error");
+        return;
+      }
+      if (pass !== pass2) {
+        showMsg("registerMsg", "Las contraseñas no coinciden.", "error");
+        return;
+      }
+
+      const users = getUsers();
+      if (users[username]) {
+        showMsg("registerMsg", "Ese usuario ya existe. Prueba con otro o inicia sesión.", "error");
+        return;
+      }
+
+      users[username] = { name, pass, origen };
+      saveUsers(users);
+
+      showMsg("registerMsg", "Cuenta creada correctamente. Ya puedes iniciar sesión.", "success");
+
+      setTimeout(() => {
+        switchAuthTab("login");
+        document.getElementById("loginUser").value = username;
+      }, 900);
+    }
+
+    function handleLogin() {
+      const username = document.getElementById("loginUser").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPass").value;
+
+      if (!username || !pass) {
+        showMsg("loginMsg", "Ingresa tu usuario y contraseña.", "error");
+        return;
+      }
+
+      const users = getUsers();
+      const user = users[username];
+
+      if (!user || user.pass !== pass) {
+        showMsg("loginMsg", "Usuario o contraseña incorrectos.", "error");
+        return;
+      }
+
+      localStorage.setItem(SESSION_KEY, username);
+      enterApp(username, user);
+    }
+
+    function handleLogout() {
+      localStorage.removeItem(SESSION_KEY);
+      document.getElementById("appWrap").classList.remove("active");
+      document.getElementById("authWrap").style.display = "grid";
+      document.getElementById("loginUser").value = "";
+      document.getElementById("loginPass").value = "";
+      switchAuthTab("login");
+    }
+
+    function enterApp(username, user) {
+      document.getElementById("authWrap").style.display = "none";
+      document.getElementById("appWrap").classList.add("active");
+
+      document.getElementById("userNameTag").textContent = user.name;
+      document.getElementById("userOrigenTag").textContent = user.origen;
+      document.getElementById("userAvatar").textContent = user.name.trim().charAt(0).toUpperCase();
+      document.getElementById("origen").value = user.origen;
+
+      // Restaura la última ruta guardada de este usuario (si existe)
+      const data = getUserData(username);
+      if (data.rutaTexto) {
+        document.getElementById("rutaTexto").textContent = data.rutaTexto;
+        document.getElementById("motivoTexto").textContent = data.motivoTexto;
+        document.getElementById("avanceTexto").textContent = data.avanceTexto;
+        document.getElementById("barraAvance").style.width = data.avance;
+      }
+      if (data.fileName) {
+        document.getElementById("fileName").textContent = data.fileName;
+      }
+    }
+
+    // Restaurar sesión activa al recargar la página
+    window.addEventListener("DOMContentLoaded", () => {
+      const activeUser = localStorage.getItem(SESSION_KEY);
+      if (activeUser) {
+        const users = getUsers();
+        if (users[activeUser]) {
+          enterApp(activeUser, users[activeUser]);
+        }
+      }
+    });
+
+    /* =========================================================
+       FUNCIONES DE LA APP (se guardan por usuario)
+    ========================================================= */
+
+    function generarRuta() {
+      const origen = document.getElementById("origen").value;
+      const destino = document.getElementById("destino").value;
+      const motivo = document.getElementById("motivo").value;
+
+      const rutaTexto = origen + " → " + destino;
+      const motivoTexto = "Motivo: " + motivo;
+      const avanceTexto = "72% avanzado";
+      const avance = "72%";
+
+      document.getElementById("rutaTexto").textContent = rutaTexto;
+      document.getElementById("motivoTexto").textContent = motivoTexto;
+      document.getElementById("avanceTexto").textContent = avanceTexto;
+      document.getElementById("barraAvance").style.width = avance;
+
+      const username = localStorage.getItem(SESSION_KEY);
+      if (username) {
+        const data = getUserData(username);
+        data.rutaTexto = rutaTexto;
+        data.motivoTexto = motivoTexto;
+        data.avanceTexto = avanceTexto;
+        data.avance = avance;
+        saveUserData(username, data);
+      }
+
+      alert("Ruta generada correctamente para " + motivo + ".");
+    }
+
+    function mostrarArchivo() {
+      const archivo = document.getElementById("archivo").files[0];
+      const fileName = document.getElementById("fileName");
+
+      if (archivo) {
+        const texto = "Archivo seleccionado: " + archivo.name;
+        fileName.textContent = texto;
+
+        const username = localStorage.getItem(SESSION_KEY);
+        if (username) {
+          const data = getUserData(username);
+          data.fileName = texto;
+          saveUserData(username, data);
+        }
+      }
+    }
+
+    function analizarDocumento() {
+      const archivo = document.getElementById("archivo").files[0];
+
+      if (!archivo) {
+        alert("Primero selecciona un documento.");
+        return;
+      }
+
+      alert("Documento recibido. En el prototipo real aquí se verificaría si cumple con los requisitos.");
+    }
+  </script>
 </body>
 </html>
