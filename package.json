@@ -2,20 +2,27 @@
   "name": "salsinmiedo-unsaac",
   "version": "1.0.0",
   "description": "Organización creada para el curso de Emprendimiento e Innovación 2026-I",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prisma": {
+    "seed": "npx tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^17.4.2",
-    "prisma": "^7.8.0",
+    "prisma": "^5.22.0",
     "tsx": "^4.23.0",
     "typescript": "^6.0.3"
   },
   "dependencies": {
-    "@prisma/client": "^7.8.0"
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "multer": "^2.2.0"
   }
 }

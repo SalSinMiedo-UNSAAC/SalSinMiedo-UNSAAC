@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SalSinMiedo | Interfaz de hipótesis</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="app.js" defer></script>
+  <script src="app.js?v=5" defer></script>
 </head>
 <body>
   <div class="app">
@@ -100,12 +100,41 @@
             <h4>Mi Ruta</h4>
             <span class="pill">68% avanzado</span>
           </div>
-          <div class="route">
-            <div>
-              <p><strong>Perú 🇵🇪 → España 🇪🇸</strong></p>
-              <p style="color:var(--muted); margin-top:6px;">Motivo: Estudios</p>
-              <div class="progress"><span></span></div>
-              <p style="color:var(--danger); font-weight:800;">3 requisitos críticos pendientes</p>
+          <div class="route" id="route-container">
+            <div style="margin-bottom: 15px; display: flex; gap: 10px; align-items: center;">
+              <select id="originSelect" style="padding: 5px; border-radius: 4px;" disabled>
+                  <option value="Perú">Perú 🇵🇪</option>
+              </select>
+              <span>→</span>
+              <select id="destSelect" style="padding: 5px; border-radius: 4px;">
+                  <optgroup label="América Latina">
+                      <option value="Argentina">Argentina 🇦🇷</option>
+                      <option value="Bolivia">Bolivia 🇧🇴</option>
+                      <option value="Brasil">Brasil 🇧🇷</option>
+                      <option value="Chile">Chile 🇨🇱</option>
+                      <option value="Colombia">Colombia 🇨🇴</option>
+                      <option value="Costa Rica">Costa Rica 🇨🇷</option>
+                      <option value="Ecuador">Ecuador 🇪🇨</option>
+                      <option value="México">México 🇲🇽</option>
+                      <option value="Panamá">Panamá 🇵🇦</option>
+                      <option value="Uruguay">Uruguay 🇺🇾</option>
+                  </optgroup>
+                  <optgroup label="Norteamérica">
+                      <option value="EE.UU.">EE.UU. 🇺🇸</option>
+                      <option value="Canadá">Canadá 🇨🇦</option>
+                  </optgroup>
+                  <optgroup label="Europa">
+                      <option value="España" selected>España 🇪🇸</option>
+                      <option value="Alemania">Alemania 🇩🇪</option>
+                      <option value="Francia">Francia 🇫🇷</option>
+                      <option value="Italia">Italia 🇮🇹</option>
+                      <option value="Reino Unido">Reino Unido 🇬🇧</option>
+                  </optgroup>
+              </select>
+              <button id="changeRouteBtn" class="btn" style="padding: 5px 10px; font-size: 12px;">Cambiar</button>
+            </div>
+            <div id="route-info">
+              <p><strong>Cargando ruta...</strong></p>
             </div>
             <div class="map">
               <div class="pin peru"></div>
@@ -120,11 +149,8 @@
             <h4>Checklist documental</h4>
             <span class="pill">Fuentes oficiales</span>
           </div>
-          <div class="checklist">
-            <div class="row"><div><strong>Pasaporte vigente</strong><small>RENIEC / Migraciones Perú</small></div><span class="status ok">Validado</span></div>
-            <div class="row"><div><strong>Visa de estudiante</strong><small>Consulado de España en Lima</small></div><span class="status bad">Pendiente</span></div>
-            <div class="row"><div><strong>Seguro médico internacional</strong><small>Requisito para estancia</small></div><span class="status warn">En revisión</span></div>
-            <div class="row"><div><strong>Comprobante de fondos</strong><small>Medios económicos suficientes</small></div><span class="status bad">Corregir</span></div>
+          <div class="checklist" id="checklist-container">
+            <p>Cargando requisitos desde la base de datos...</p>
           </div>
         </article>
 
@@ -134,26 +160,32 @@
             <span class="pill">Evidencia de uso</span>
           </div>
           <div class="upload">
-            <div>
+            <form id="uploadForm" style="display:flex; flex-direction:column; align-items:center;">
               <div style="font-size:42px; margin-bottom:10px;">☁️</div>
               <strong>Sube tu documento</strong>
               <p>PDF, JPG o PNG · máximo 10 MB</p>
-              <button class="btn">Analizar documento</button>
-            </div>
+              <select name="requirementId" id="requirementSelect" required style="margin: 10px 0; width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc;">
+                <option value="">Cargando requisitos...</option>
+              </select>
+              <input type="file" id="documentInput" name="document" accept=".pdf,image/png,image/jpeg" required style="margin: 10px 0; max-width: 100%;">
+              <button type="submit" class="btn" id="uploadBtn">Analizar documento</button>
+            </form>
           </div>
         </article>
 
-        <article class="screen">
-          <div class="screen-header">
-            <h4>Costos y lugares</h4>
-            <span class="pill">Ruta segura</span>
+          <div class="card expenses">
+            <div class="card-header">
+              <h3>Costos y lugares</h3>
+              <span class="pill">Ruta segura</span>
+            </div>
+            <p id="cost-description" style="color:var(--muted); margin-bottom: 5px;">Estimación referencial de trámites.</p>
+            <h2 id="cost-amount" style="font-size: 2.5rem; color:var(--primary); margin-bottom: 20px;">Cargando...</h2>
+            <img src="/assets/expenses-mockup.png" alt="Mockup de gastos" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" />
+            
+            <div id="places-container">
+              <!-- Lugares dinámicos -->
+            </div>
           </div>
-          <p style="color:var(--muted);">Estimación referencial para estudiar en España.</p>
-          <div class="cost-total">€ 4,480</div>
-          <img src="assets/fg.jpeg" style="width: 100%; border-radius: 12px; margin-top: 10px; margin-bottom: 10px; object-fit: cover; height: 120px;" alt="Sede principal"/>
-          <div class="row"><div><strong>Consulado de España en Lima</strong><small>Visado y legalizaciones</small></div><span class="status ok">Ver mapa</span></div>
-          <div class="row"><div><strong>RENIEC / Migraciones</strong><small>Pasaporte y salida del país</small></div><span class="status ok">Link</span></div>
-        </article>
       </section>
 
     </main>

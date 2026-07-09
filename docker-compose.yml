@@ -3,10 +3,16 @@ version: '3.8'
 services:
   web:
     build: .
+    command: sh -c "npx prisma generate && node server.js"
     ports:
       - "8080:80"
     volumes:
-      - .:/usr/share/nginx/html
+      - .:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://salsinmiedo_user:salsinmiedo_password@db:5432/salsinmiedo_db?schema=public
+    depends_on:
+      - db
     restart: always
 
   db:
