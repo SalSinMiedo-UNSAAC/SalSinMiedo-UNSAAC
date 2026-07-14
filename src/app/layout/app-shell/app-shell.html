@@ -1,0 +1,28 @@
+<div class="min-h-screen bg-[#f7f8fc]">
+  @if (isMobileMenuOpen()) {
+    <button
+      type="button"
+      class="fixed inset-0 z-30 bg-slate-950/45 backdrop-blur-[1px] lg:hidden"
+      aria-label="Cerrar menú"
+      (click)="closeMobileMenu()"
+    ></button>
+  }
+
+  <app-sidebar
+    [isMobileMenuOpen]="isMobileMenuOpen()"
+    [isCollapsed]="sidebarIsCompact()"
+    (navigate)="closeMobileMenu()"
+    (collapseToggle)="toggleSidebar()"
+    (hoverChange)="setSidebarHover($event)"
+  />
+
+  <div [class]="mainClasses()">
+    <app-topbar (menuToggle)="toggleMobileMenu()" (sidebarToggle)="toggleSidebar()" />
+
+    <main class="px-5 pb-10 pt-7 sm:px-7 lg:px-10">
+      <div class="mx-auto w-full max-w-[1380px]">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+</div>

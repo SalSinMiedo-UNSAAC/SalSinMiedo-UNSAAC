@@ -1,0 +1,107 @@
+<aside
+  id="main-navigation"
+  class="fixed inset-y-0 left-0 z-40 flex -translate-x-full flex-col overflow-hidden bg-[#071545] text-white shadow-2xl shadow-slate-950/30 transition-[width,transform] duration-300 ease-out lg:translate-x-0 lg:shadow-none"
+  [style.width.px]="isCollapsed() ? 76 : 224"
+  [class.translate-x-0]="isMobileMenuOpen()"
+  [class.-translate-x-full]="!isMobileMenuOpen()"
+  (mouseenter)="hoverChange.emit(true)"
+  (mouseleave)="hoverChange.emit(false)"
+>
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(79,70,229,0.23),transparent_36%)]"
+  ></div>
+
+  <div class="relative flex min-h-0 flex-1 flex-col px-4 py-6">
+    <div class="flex items-center" [class.justify-center]="isCollapsed()">
+      <button
+        type="button"
+        class="flex min-w-0 items-center gap-3 rounded-xl px-2 text-left transition hover:bg-white/10"
+        [class.justify-center]="isCollapsed()"
+        [attr.aria-label]="isCollapsed() ? 'Expandir navegación' : 'Contraer navegación'"
+        (click)="collapseToggle.emit()"
+      >
+      <div
+        class="grid size-12 place-items-center rounded-2xl border border-white/25 bg-gradient-to-br from-indigo-400 to-indigo-700 shadow-lg shadow-indigo-950/40"
+      >
+        <lucide-icon
+          [img]="ShieldCheck"
+          class="size-7"
+          [strokeWidth]="2.3"
+        />
+      </div>
+
+      @if (!isCollapsed()) {
+      <div>
+        <div class="text-xl font-bold tracking-tight">
+          SalSinMiedo
+        </div>
+
+        <div class="text-xs text-indigo-100/80">
+          Tu camino seguro
+        </div>
+      </div>
+      }
+      </button>
+    </div>
+
+    <nav class="mt-12 space-y-1.5" [class.mt-14]="isCollapsed()">
+      @for (item of navigation; track item.route) {
+        <a
+          [routerLink]="item.route"
+          (click)="navigate.emit()"
+          routerLinkActive="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-950/20"
+          [routerLinkActiveOptions]="{ exact: item.route === '/inicio' }"
+          class="group flex min-h-14 items-center gap-4 rounded-xl px-4 text-[15px] font-medium text-indigo-50/85 transition hover:bg-white/10 hover:text-white"
+          [class.justify-center]="isCollapsed()"
+          [class.px-0]="isCollapsed()"
+          [attr.aria-label]="isCollapsed() ? item.label : null"
+        >
+          <lucide-icon
+            [img]="item.icon"
+            class="size-6 shrink-0"
+            [strokeWidth]="1.9"
+          />
+
+          @if (!isCollapsed()) {
+          <span class="min-w-0 flex-1 truncate">
+            {{ item.label }}
+          </span>
+          }
+
+          @if (item.notificationCount && !isCollapsed()) {
+            <span
+              class="ml-1 grid size-7 shrink-0 place-items-center rounded-full bg-indigo-400 text-xs font-bold text-white ring-2 ring-[#071545]"
+            >
+              {{ item.notificationCount }}
+            </span>
+          }
+        </a>
+      }
+    </nav>
+
+    @if (!isCollapsed()) {
+    <div
+      class="mt-auto rounded-2xl border border-white/5 bg-white/[0.06] px-4 py-4 shadow-lg"
+    >
+      <p class="font-semibold">
+        ¿Necesitas ayuda?
+      </p>
+
+      <button
+        type="button"
+        class="mt-3 flex items-center gap-3 text-sm text-indigo-100 transition hover:text-white"
+      >
+        <span class="grid size-7 place-items-center rounded-full bg-white text-[#071545]">
+          <lucide-icon
+            [img]="MessageCircle"
+            class="size-4"
+            [strokeWidth]="2"
+          />
+        </span>
+
+        Escríbenos por chat
+      </button>
+    </div>
+    }
+  </div>
+</aside>
