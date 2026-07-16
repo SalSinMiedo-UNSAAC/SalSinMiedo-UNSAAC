@@ -1,8 +1,8 @@
 # Dependencies and generated files are created inside the image.
-node_modules
-dist
-.angular
-coverage
+**/node_modules
+**/dist
+**/.angular
+**/coverage
 
 # Version-control and local-editor files are not part of the runtime image.
 .git
@@ -13,9 +13,9 @@ coverage
 .codex
 
 # Local configuration, logs and OS artifacts.
-.env
-.env.*
-!.env.example
+**/.env
+**/.env.*
+!**/.env.example
 *.log
 tmp
 out-tsc
