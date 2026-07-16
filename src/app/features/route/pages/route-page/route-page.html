@@ -1,0 +1,371 @@
+<section class="pb-8">
+  <header
+    class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between"
+  >
+    <div>
+      <h1
+        class="text-[32px] font-bold tracking-[-0.7px] text-[#111942] sm:text-[36px]"
+      >
+        Mi ruta migratoria
+      </h1>
+
+      <p class="mt-2 text-[15px] text-slate-500">
+        Configura el trayecto que quieres realizar y sigue cada etapa de tu proceso.
+      </p>
+    </div>
+
+    <div
+      class="inline-flex items-center gap-3 rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-3"
+    >
+      <lucide-icon
+        [img]="GraduationCap"
+        class="size-5 text-indigo-600"
+      />
+
+      <div>
+        <p class="text-[11px] text-slate-500">
+          Motivo de viaje
+        </p>
+
+        <p class="text-[13px] font-bold text-[#111942]">
+          {{ routeService.route().reason }}
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <article class="relative mt-7 overflow-hidden rounded-2xl border border-indigo-100 bg-white p-5 shadow-[0_10px_30px_rgba(24,32,79,0.06)] sm:p-6">
+    <div class="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-indigo-100/60 blur-3xl"></div>
+    <div class="relative flex flex-col gap-5 xl:flex-row xl:items-end">
+      <div class="min-w-0 xl:w-[260px]"><p class="text-[15px] font-bold text-[#111942]">Diseña tu ruta</p><p class="mt-1 text-[12px] leading-5 text-slate-500">Puedes cambiar estos datos cuando tu plan se actualice.</p></div>
+      <label class="block flex-1"><span class="text-[11px] font-semibold text-[#273263]">Desde</span><select class="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-[13px] font-semibold text-[#111942] transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100" [value]="selectedOrigin()" (change)="updateOrigin($event)">@for (place of routeService.places; track place.name) { <option [value]="place.name">{{ place.flag }} {{ place.name }}</option> }</select></label>
+      <div class="hidden h-12 w-12 shrink-0 place-items-center rounded-xl bg-indigo-50 text-indigo-600 xl:grid"><lucide-icon [img]="Plane" class="size-5 rotate-45" /></div>
+      <label class="block flex-1"><span class="text-[11px] font-semibold text-[#273263]">Hacia</span><select class="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-[13px] font-semibold text-[#111942] transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100" [value]="selectedDestination()" (change)="updateDestination($event)">@for (place of routeService.places; track place.name) { <option [value]="place.name">{{ place.flag }} {{ place.name }}</option> }</select></label>
+      <label class="block flex-1"><span class="text-[11px] font-semibold text-[#273263]">Motivo</span><select class="mt-2 h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-[13px] font-semibold text-[#111942] transition focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100" [value]="selectedReason()" (change)="updateReason($event)">@for (reason of routeService.travelReasons; track reason) { <option [value]="reason">{{ reason }}</option> }</select></label>
+      <button type="button" class="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 text-[13px] font-semibold text-white shadow-lg shadow-indigo-200 transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50" [disabled]="selectedOrigin() === selectedDestination()" (click)="saveRoute()"><lucide-icon [img]="Save" class="size-4" />Guardar ruta</button>
+    </div>
+    @if (selectedOrigin() === selectedDestination()) { <p class="relative mt-3 text-[11px] font-medium text-orange-600">El origen y el destino deben ser distintos.</p> } @else if (routeSaved()) { <p class="relative mt-3 text-[11px] font-medium text-emerald-600">Ruta guardada. Queda lista para sincronizarse con el backend.</p> }
+  </article>
+
+  <!-- Resumen -->
+  <div class="mt-7 grid gap-5 xl:grid-cols-[1.35fr_0.65fr]">
+    <article
+      class="rounded-2xl border border-[#e3e7f1] bg-white p-6 shadow-[0_8px_26px_rgba(24,32,79,0.045)]"
+    >
+      <div
+        class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div>
+          <p class="text-[14px] font-bold text-[#111942]">
+            Ruta actual
+          </p>
+
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <span class="text-[28px]">{{ routeService.origin().flag }}</span>
+            <strong class="text-[20px] text-[#111942]">
+              {{ routeService.origin().name }}
+            </strong>
+
+            <div
+              class="flex min-w-[100px] flex-1 items-center gap-2"
+            >
+              <span class="h-px flex-1 bg-indigo-200"></span>
+
+              <lucide-icon
+                [img]="Plane"
+                class="size-5 rotate-45 text-indigo-600"
+              />
+
+              <span class="h-px flex-1 bg-indigo-200"></span>
+            </div>
+
+            <span class="text-[28px]">{{ routeService.destination().flag }}</span>
+            <strong class="text-[20px] text-[#111942]">
+              {{ routeService.destination().name }}
+            </strong>
+          </div>
+
+          <div class="mt-5 flex items-center gap-2 text-[13px] text-slate-500">
+            <lucide-icon [img]="MapPin" class="size-4 text-indigo-600" />
+            Etapa actual: Solicitud de visado
+          </div>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <div
+            class="relative grid size-[116px] place-items-center rounded-full"
+            style="background: conic-gradient(#4f46e5 0deg 244.8deg, #e9ebf5 244.8deg 360deg)"
+          >
+            <div
+              class="grid size-[91px] place-items-center rounded-full bg-white"
+            >
+              <strong class="text-[25px] text-[#111942]">
+                68%
+              </strong>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-[13px] text-slate-500">
+              Progreso general
+            </p>
+
+            <p class="mt-1 text-[18px] font-bold text-[#111942]">
+              Etapa de visado
+            </p>
+
+            <p class="mt-1 text-[11px] text-indigo-600">
+              Continúa avanzando
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="rounded-2xl border border-orange-200 bg-gradient-to-br from-[#fffaf1] to-[#fff3e5] p-6"
+    >
+      <div class="flex gap-4">
+        <div
+          class="grid size-11 shrink-0 place-items-center rounded-xl bg-orange-100 text-orange-600"
+        >
+          <lucide-icon [img]="Clock3" class="size-6" />
+        </div>
+
+        <div>
+          <p class="text-[14px] font-bold text-[#71330d]">
+            Próximo paso importante
+          </p>
+
+          <p class="mt-2 text-[13px] leading-5 text-slate-600">
+            Completa el seguro médico antes de tu cita consular.
+          </p>
+
+          <a
+            routerLink="/requisitos"
+            class="mt-4 inline-flex items-center gap-2 text-[12px] font-semibold text-orange-600"
+          >
+            Revisar requisito
+            <lucide-icon [img]="ChevronRight" class="size-4" />
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="mt-6 grid gap-6 xl:grid-cols-[1fr_360px]">
+    <!-- Etapas -->
+    <article
+      class="rounded-2xl border border-[#e3e7f1] bg-white p-6 shadow-[0_8px_26px_rgba(24,32,79,0.045)]"
+    >
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-[18px] font-bold text-[#111942]">
+            Etapas de tu proceso
+          </h2>
+
+          <p class="mt-1 text-[12px] text-slate-500">
+            Completa cada etapa para avanzar de manera segura.
+          </p>
+        </div>
+
+        <span
+          class="rounded-full bg-indigo-50 px-3 py-2 text-[11px] font-semibold text-indigo-600"
+        >
+          68% completado
+        </span>
+      </div>
+
+      <div class="relative mt-7">
+        <div
+          class="absolute bottom-12 left-[25px] top-8 w-px bg-slate-200"
+        ></div>
+
+        <div class="space-y-5">
+          @for (stage of stages; track stage.number) {
+            <div class="relative flex gap-5">
+              <div
+                class="relative z-10 grid size-[52px] shrink-0 place-items-center rounded-full ring-4"
+                [class]="stageIconClass(stage.status)"
+              >
+                @if (stage.status === 'completed') {
+                  <lucide-icon
+                    [img]="Check"
+                    class="size-6"
+                    [strokeWidth]="3"
+                  />
+                } @else {
+                  <lucide-icon
+                    [img]="stage.icon"
+                    class="size-6"
+                  />
+                }
+              </div>
+
+              <div
+                class="min-w-0 flex-1 rounded-xl border border-[#e5e8f1] p-5 transition hover:border-indigo-200 hover:shadow-sm"
+              >
+                <div
+                  class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"
+                >
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <span
+                        class="text-[11px] font-semibold text-slate-400"
+                      >
+                        ETAPA {{ stage.number }}
+                      </span>
+
+                      <span
+                        class="rounded-full border px-3 py-1 text-[10px] font-semibold"
+                        [class]="statusClass(stage.status)"
+                      >
+                        {{ statusLabel(stage.status) }}
+                      </span>
+                    </div>
+
+                    <h3 class="mt-2 text-[15px] font-bold text-[#111942]">
+                      {{ stage.title }}
+                    </h3>
+
+                    <p class="mt-1 text-[12px] text-slate-500">
+                      {{ stage.description }}
+                    </p>
+                  </div>
+
+                  <strong class="text-[13px] text-indigo-600">
+                    {{ stage.progress }}%
+                  </strong>
+                </div>
+
+                <div
+                  class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100"
+                >
+                  <div
+                    class="h-full rounded-full transition-all"
+                    [class.bg-emerald-500]="stage.status === 'completed'"
+                    [class.bg-indigo-600]="stage.status === 'current'"
+                    [class.bg-slate-300]="stage.status === 'pending'"
+                    [style.width.%]="stage.progress"
+                  ></div>
+                </div>
+
+                <div class="mt-4 grid gap-2 sm:grid-cols-3">
+                  @for (task of stage.tasks; track task) {
+                    <div
+                      class="flex items-center gap-2 text-[11px] text-slate-600"
+                    >
+                      @if (stage.status === 'completed') {
+                        <lucide-icon
+                          [img]="CheckCircle2"
+                          class="size-4 shrink-0 text-emerald-500"
+                        />
+                      } @else if (stage.status === 'current') {
+                        <lucide-icon
+                          [img]="Circle"
+                          class="size-4 shrink-0 text-indigo-500"
+                        />
+                      } @else {
+                        <lucide-icon
+                          [img]="Circle"
+                          class="size-4 shrink-0 text-slate-300"
+                        />
+                      }
+
+                      {{ task }}
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </article>
+
+    <!-- Fechas -->
+    <div class="space-y-6">
+      <article
+        class="rounded-2xl border border-[#e3e7f1] bg-white p-5 shadow-[0_8px_26px_rgba(24,32,79,0.045)]"
+      >
+        <div class="flex items-center gap-3">
+          <lucide-icon
+            [img]="CalendarDays"
+            class="size-5 text-indigo-600"
+          />
+
+          <h2 class="text-[16px] font-bold text-[#111942]">
+            Próximas fechas
+          </h2>
+        </div>
+
+        <div class="mt-5 space-y-4">
+          @for (date of upcomingDates; track date.title) {
+            <div
+              class="flex items-center gap-4 rounded-xl border border-[#e6e9f2] p-3"
+            >
+              <div
+                class="grid size-14 shrink-0 place-items-center rounded-xl border text-center"
+                [class]="dateClass(date.type)"
+              >
+                <div>
+                  <p class="text-[17px] font-bold leading-none">
+                    {{ date.day }}
+                  </p>
+
+                  <p class="mt-1 text-[9px] font-semibold">
+                    {{ date.month }}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <p class="text-[12px] font-bold text-[#111942]">
+                  {{ date.title }}
+                </p>
+
+                <p class="mt-1 text-[10px] leading-4 text-slate-500">
+                  {{ date.description }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="mt-5 flex h-11 w-full items-center justify-center rounded-lg border border-indigo-200 text-[12px] font-semibold text-indigo-600 hover:bg-indigo-50"
+        >
+          Ver calendario completo
+        </button>
+      </article>
+
+      <article
+        class="rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#2e1fa5] p-6 text-white shadow-[0_12px_30px_rgba(79,70,229,0.22)]"
+      >
+        <div
+          class="grid size-11 place-items-center rounded-xl bg-white/10"
+        >
+          <lucide-icon [img]="ShieldCheck" class="size-6" />
+        </div>
+
+        <h2 class="mt-5 text-[18px] font-bold">
+          Mantén tu ruta actualizada
+        </h2>
+
+        <p class="mt-3 text-[12px] leading-5 text-indigo-100">
+          Marca los requisitos completados para recibir recomendaciones y
+          alertas más precisas.
+        </p>
+
+        <a
+          routerLink="/requisitos"
+          class="mt-6 inline-flex h-11 items-center gap-2 rounded-lg bg-white px-4 text-[12px] font-semibold text-indigo-700"
+        >
+          Actualizar requisitos
+          <lucide-icon [img]="ChevronRight" class="size-4" />
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
