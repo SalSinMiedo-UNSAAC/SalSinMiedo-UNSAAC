@@ -31,14 +31,6 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'mi-ruta',
-        title: 'Mi ruta | SalSinMiedo',
-        loadComponent: () =>
-          import('./features/route/pages/route-page/route-page').then(
-            (component) => component.RoutePage,
-          ),
-      },
-      {
         path: 'requisitos',
         title: 'Requisitos | SalSinMiedo',
         loadComponent: () =>

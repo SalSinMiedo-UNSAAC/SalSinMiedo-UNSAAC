@@ -15,10 +15,10 @@
       </p>
     </div>
 
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
       <button
         type="button"
-        class="inline-flex items-center gap-2 self-start rounded-xl border border-indigo-100 bg-indigo-50/70 px-4 py-3 text-left text-[11px] text-indigo-800 transition hover:bg-indigo-100"
+        class="inline-flex max-w-full items-center gap-2 self-start rounded-xl border border-indigo-100 bg-indigo-50/70 px-4 py-3 text-left text-[11px] text-indigo-800 transition hover:bg-indigo-100"
         (click)="refreshRequirements()"
         title="Actualizar fecha de consulta"
       >
@@ -28,7 +28,7 @@
 
       <a
         routerLink="/verificador"
-        class="inline-flex h-12 items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 text-[13px] font-semibold text-white shadow-lg shadow-indigo-200 transition hover:brightness-105"
+        class="inline-flex h-12 w-full items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-5 text-[13px] font-semibold text-white shadow-lg shadow-indigo-200 transition hover:brightness-105 sm:w-auto"
       >
         <lucide-icon [img]="ShieldCheck" class="size-5" />
         Verificar documento

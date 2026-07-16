@@ -36,6 +36,22 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## Docker
+
+The application can run on any machine with Docker and Docker Compose installed:
+
+```bash
+docker compose up --build
+```
+
+Open `http://localhost:8080`. The image compiles Angular in a Node build stage and serves the generated SPA with Nginx. Client-side routes are supported when opening or refreshing a URL directly.
+
+To stop the service:
+
+```bash
+docker compose down
+```
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:

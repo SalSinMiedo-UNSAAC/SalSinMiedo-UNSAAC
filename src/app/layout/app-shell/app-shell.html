@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#f7f8fc]">
+<div class="min-h-screen overflow-x-clip bg-[#f7f8fc]">
   @if (isMobileMenuOpen()) {
     <button
       type="button"
@@ -19,7 +19,7 @@
   <div [class]="mainClasses()">
     <app-topbar (menuToggle)="toggleMobileMenu()" (sidebarToggle)="toggleSidebar()" />
 
-    <main class="px-5 pb-10 pt-7 sm:px-7 lg:px-10">
+    <main class="px-4 pb-10 pt-6 sm:px-7 sm:pt-7 lg:px-10">
       <div class="mx-auto w-full max-w-[1380px]">
         <router-outlet />
       </div>

@@ -4,6 +4,7 @@ import {
   computed,
   effect,
   OnDestroy,
+  signal,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RouteService } from '../../../../core/route/route.service';
@@ -19,6 +20,7 @@ import {
   GraduationCap,
   LucideAngularModule,
   ShieldCheck,
+  Save,
   Timer,
 } from 'lucide-angular';
 
@@ -62,6 +64,11 @@ export class DashboardPage implements AfterViewInit, OnDestroy {
   readonly ExternalLink = ExternalLink;
   readonly ShieldCheck = ShieldCheck;
   readonly ChevronRight = ChevronRight;
+  readonly Save = Save;
+  readonly selectedOrigin = signal('');
+  readonly selectedDestination = signal('');
+  readonly selectedReason = signal('');
+  readonly routeSaved = signal(false);
 
   readonly summaryCards: SummaryCard[] = [
     {
@@ -161,8 +168,12 @@ export class DashboardPage implements AfterViewInit, OnDestroy {
   }
 
   constructor(readonly routeService: RouteService) {
+    this.syncRouteForm();
+
     effect(() => {
       this.routeService.route();
+      this.syncRouteForm();
+
       if (this.routeMap) {
         this.routeMap.remove();
         this.routeMap = undefined;
@@ -171,8 +182,35 @@ export class DashboardPage implements AfterViewInit, OnDestroy {
     });
   }
 
+  updateOrigin(event: Event): void {
+    this.selectedOrigin.set((event.target as HTMLSelectElement).value);
+    this.routeSaved.set(false);
+  }
+
+  updateDestination(event: Event): void {
+    this.selectedDestination.set((event.target as HTMLSelectElement).value);
+    this.routeSaved.set(false);
+  }
+
+  updateReason(event: Event): void {
+    this.selectedReason.set((event.target as HTMLSelectElement).value);
+    this.routeSaved.set(false);
+  }
+
+  saveRoute(): void {
+    if (this.selectedOrigin() === this.selectedDestination()) return;
+
+    this.routeService.save({
+      origin: this.selectedOrigin(),
+      destination: this.selectedDestination(),
+      reason: this.selectedReason(),
+    });
+    this.routeSaved.set(true);
+  }
+
   ngAfterViewInit(): void {
     window.setTimeout(() => {
+      this.syncRouteForm();
       this.initializeRouteMap();
     }, 0);
   }
@@ -180,6 +218,22 @@ export class DashboardPage implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.routeMap?.remove();
     this.routeMap = undefined;
+  }
+
+  private syncRouteForm(): void {
+    const route = this.routeService.route();
+    this.selectedOrigin.set(route.origin);
+    this.selectedDestination.set(route.destination);
+    this.selectedReason.set(route.reason);
+
+    this.setSelectValue('route-origin', route.origin);
+    this.setSelectValue('route-destination', route.destination);
+    this.setSelectValue('route-reason', route.reason);
+  }
+
+  private setSelectValue(id: string, value: string): void {
+    const select = document.getElementById(id) as HTMLSelectElement | null;
+    if (select) select.value = value;
   }
 
   private initializeRouteMap(): void {

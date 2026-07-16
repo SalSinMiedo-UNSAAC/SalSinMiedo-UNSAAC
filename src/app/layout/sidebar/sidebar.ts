@@ -9,7 +9,6 @@ import {
   LucideAngularModule,
   MapPinned,
   MessageCircle,
-  Route,
   ShieldCheck,
 } from 'lucide-angular';
 
@@ -39,11 +38,6 @@ export class Sidebar {
       label: 'Inicio',
       route: '/inicio',
       icon: House,
-    },
-    {
-      label: 'Mi Ruta',
-      route: '/mi-ruta',
-      icon: Route,
     },
     {
       label: 'Requisitos',

@@ -177,17 +177,13 @@ export class SourcesPage implements AfterViewInit, OnDestroy {
         this.map.remove();
         this.map = undefined;
         this.markers = [];
-        if (this.activeView() === 'map') {
-          window.setTimeout(() => this.initializeMap());
-        }
+        this.scheduleMapInitialization();
       }
     });
   }
 
   ngAfterViewInit(): void {
-    window.setTimeout(() => {
-      this.initializeMap();
-    });
+    this.scheduleMapInitialization();
   }
 
   ngOnDestroy(): void {
@@ -330,6 +326,22 @@ export class SourcesPage implements AfterViewInit, OnDestroy {
     window.setTimeout(() => {
       this.map?.invalidateSize();
     }, 100);
+  }
+
+  private scheduleMapInitialization(attempt = 0): void {
+    window.requestAnimationFrame(() => {
+      const mapElement = document.getElementById('sources-map');
+
+      if (!mapElement || !mapElement.clientWidth || !mapElement.clientHeight) {
+        if (attempt < 5) {
+          window.setTimeout(() => this.scheduleMapInitialization(attempt + 1), 120);
+        }
+        return;
+      }
+
+      this.initializeMap();
+      window.setTimeout(() => this.map?.invalidateSize(), 200);
+    });
   }
 
   private createMarkerIcon(

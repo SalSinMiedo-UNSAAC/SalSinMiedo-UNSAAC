@@ -35,7 +35,7 @@
   <div class="mt-7 grid gap-6 xl:grid-cols-[0.82fr_1.18fr]">
     <!-- Instituciones -->
     <article
-      class="rounded-2xl border border-[#e2e6f0] bg-white p-5 shadow-[0_7px_25px_rgba(24,32,79,0.045)]"
+      class="overflow-hidden rounded-2xl border border-[#e2e6f0] bg-white p-5 shadow-[0_7px_25px_rgba(24,32,79,0.045)]"
     >
       <h2 class="text-[17px] font-bold text-[#111942]">
         Fuentes oficiales y lugares de trámite
@@ -47,11 +47,11 @@
           track institution.id
         ) {
           <div
-            class="group flex min-h-[91px] items-center gap-4 rounded-xl border border-[#e4e7f1] bg-white px-4 py-3 transition hover:border-indigo-200 hover:bg-indigo-50/25"
+            class="group relative flex min-h-[91px] max-w-full min-w-0 items-center gap-3 overflow-hidden rounded-xl border border-[#e4e7f1] bg-white px-4 py-3 transition hover:border-indigo-200 hover:bg-indigo-50/25 sm:gap-4"
           >
             <button
               type="button"
-              class="flex min-w-0 flex-1 items-center gap-4 text-left"
+              class="flex min-w-0 flex-1 items-center gap-3 pr-12 text-left sm:gap-4 sm:pr-0"
               (click)="selectInstitution(institution)"
             >
               <div
@@ -68,7 +68,7 @@
                   {{ institution.name }}
                 </p>
 
-                <p class="mt-1 text-[12px] text-slate-500">
+                <p class="mt-1 truncate text-[12px] text-slate-500">
                   {{ institution.description }}
                 </p>
               </div>
@@ -76,10 +76,11 @@
 
             <button
               type="button"
-              class="inline-flex h-10 shrink-0 items-center gap-2 rounded-lg border border-indigo-200 px-4 text-[11px] font-semibold text-indigo-600 transition hover:bg-indigo-50"
+              class="absolute right-3 top-1/2 inline-flex size-10 shrink-0 -translate-y-1/2 items-center justify-center rounded-lg border border-indigo-200 p-0 text-[11px] font-semibold text-indigo-600 transition hover:bg-indigo-50 sm:static sm:h-10 sm:w-auto sm:translate-y-0 sm:gap-2 sm:px-4"
+              aria-label="Visitar sitio oficial"
               (click)="openWebsite(institution)"
             >
-              Visitar sitio
+              <span class="hidden sm:inline">Visitar sitio</span>
 
               <lucide-icon
                 [img]="ExternalLink"
@@ -125,7 +126,7 @@
     >
       <!-- Pestañas -->
       <div
-        class="flex h-[66px] items-end justify-center gap-16 border-b border-[#e4e7f1]"
+        class="flex h-[66px] items-end border-b border-[#e4e7f1] px-6"
       >
         <button
           type="button"
@@ -143,21 +144,6 @@
           }
         </button>
 
-        <button
-          type="button"
-          class="relative h-full px-5 pt-1 text-[15px] font-semibold transition"
-          [class.text-indigo-600]="activeView() === 'list'"
-          [class.text-slate-500]="activeView() !== 'list'"
-          (click)="setActiveView('list')"
-        >
-          Lista
-
-          @if (activeView() === 'list') {
-            <span
-              class="absolute inset-x-0 bottom-0 h-[3px] rounded-t-full bg-indigo-600"
-            ></span>
-          }
-        </button>
       </div>
 
       @if (activeView() === 'map') {
