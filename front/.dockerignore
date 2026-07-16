@@ -1,0 +1,14 @@
+node_modules
+dist
+.angular
+coverage
+.git
+.gitignore
+.vscode
+.idea
+.env
+.env.*
+!.env.example
+*.log
+Thumbs.db
+.DS_Store
